@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "336050141576",
+    "project_id": "musenex",
+    "storage_bucket": "musenex.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:336050141576:android:1225e077ea53674e13223d",
+        "android_client_info": {
+          "package_name": "com.ipca_project.musenex"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBu7APAewuhkWdS5a5delvRecxqS1t2uOU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
