@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.ipca_project.musenex"
-    compileSdk = 34
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "com.ipca_project.musenex"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
