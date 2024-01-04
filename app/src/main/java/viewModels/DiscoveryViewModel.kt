@@ -1,6 +1,7 @@
 package viewModels
 
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,6 +10,7 @@ import com.google.firebase.firestore.firestore
 import model.Category
 import model.Event
 import model.Museum
+import model.Piece
 import java.sql.Timestamp
 
 class DiscoveryViewModel {
@@ -17,7 +19,8 @@ class DiscoveryViewModel {
 
     var museums = MutableLiveData<ArrayList<Museum>>()
     var categories = arrayListOf<Category>()
-     var events = MutableLiveData<ArrayList<Event>>()
+    var events = MutableLiveData<ArrayList<Event>>()
+    var pieces = MutableLiveData<ArrayList<Piece>>()
 
     fun fetchDiscovery() {
         fetchCategories()
@@ -37,6 +40,7 @@ class DiscoveryViewModel {
                 }
                 fetchMuseums()
                 fetchEvents()
+                fetchPieces()
             }
             .addOnFailureListener { exception ->
                 Log.w(ContentValues.TAG, "Error getting documents.", exception)
@@ -93,6 +97,33 @@ class DiscoveryViewModel {
                 Log.w(ContentValues.TAG, "Error getting documents.", exception)
             }
     }
+
+    private fun fetchPieces() {
+        var aux = arrayListOf<Piece>()
+
+        db.collection("Obras")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    aux.add(Piece(
+                        document.id,
+                        document.data["nome"].toString(),
+                        document.data["descricao"].toString(),
+                        document.data["autor_id"].toString(),
+                        document.data["museu_id"].toString(),
+                        document.data["categoria_id"].toString(),
+                        document.data["audioUrl"].toString(),
+                        document.data["foto_url"].toString()
+                    ))
+                }
+                 pieces.value = transformPieces(aux)
+            }
+            .addOnFailureListener { exception ->
+                Log.w(ContentValues.TAG, "Error getting documents.", exception)
+            }
+    }
+
+
     private fun transformMuseums(museums: ArrayList<Museum>): ArrayList<Museum>
     {
         for (museum in museums) {
@@ -110,5 +141,14 @@ class DiscoveryViewModel {
             event.categoryName = categoryName
         }
         return events
+    }
+    private fun transformPieces(pieces: ArrayList<Piece>): ArrayList<Piece>
+    {
+        for (piece in pieces) {
+            var categoryName: String =
+                categories.filter { s -> s.categoryId == piece.categoryId }.single().name
+            piece.categoryName = categoryName
+        }
+        return pieces
     }
 }
