@@ -53,4 +53,9 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-auth")
+    //Imports for discovery
+    implementation ("me.relex:circleindicator:2.1.6")
+    implementation ("com.github.ImaginativeShohag:Why-Not-Image-Carousel:v1.0.0")
+    implementation("androidx.gridlayout:gridlayout:1.0.0")
+    implementation("androidx.cardview:cardview:1.0.0")
 }

@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">MuseNex</string>
+    <string name="who_we_are">Quem Somos Nós</string>
+    <string name="who_we_are_text">Texto apresentação sobre nós</string>
+    <string name="objective">O Nosso Objetivo</string>
+    <string name="objective_text">Texto apresentação sobre o objetivo da app</string>
+    <string name="skip_button">Skip</string>
+    <string name="next_button">Next</string>
+    <string name="get_started_button">Get Started</string>
 </resources>
