@@ -1,3 +1,16 @@
 <resources>
+    //atributos Museu
     <string name="app_name">MuseNex</string>
+    <string name="museum_name">Name</string>
+    <string name="museum_location">Location</string>
+    <string name="museum_description">Description</string>
+    <string name="museum_contact">Contact</string>
+    <string name="museum_galery">Galery</string>
+    <string name="museum_colection">Colection</string>
+    <string name="museum_visit">Visit</string>
+    <string name="seeAll">See All</string>
+    <string name="events">Events</string>
+    <string name="pieces">Pieces of Art</string>
+
+
 </resources>
