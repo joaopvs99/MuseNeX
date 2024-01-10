@@ -25,83 +25,62 @@ import org.imaginativeworld.whynotimagecarousel.ImageCarousel
 import viewModels.DiscoveryViewModel
 
 open class Discovery : AppCompatActivity() {
-    lateinit var courseRV: RecyclerView
-    lateinit var courseRVAdapter: AdapterDiscovery
-    lateinit var courseList: ArrayList<DiscoveryCardView>
+
+    // Variaveis
+    private lateinit var courseRV: RecyclerView
+    private lateinit var courseRVAdapter: AdapterDiscovery
     private lateinit var historyButton: LinearLayout
     private lateinit var historyButtonText: TextView
     private lateinit var linearForSearch : LinearLayout
-    //private lateinit var museumList : ListView
+    private lateinit var carousel: ImageCarousel
 
+    // Listas
+    private lateinit var courseList: ArrayList<DiscoveryCardView>
+
+    // Ligação base de dados
     var viewModel = DiscoveryViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.discovery_page)
 
-        // base de dados
-
+        // Iniciar Base de dados
         viewModel.fetchDiscovery()
 
-        viewModel.events.observe(this, Observer { events ->
-            Toast.makeText(applicationContext, "Entrei aqui!!", Toast.LENGTH_SHORT)
-        })
-
-            //-----------------------------------------------------------------------------------------------
-
+        // Iniciar componentes do layout
         courseRV = findViewById(R.id.recyclerViewDiscovery)
-
-
-
-
-        //----------------------------------------------------------------------------------------------------
         historyButton = findViewById(R.id.buttonHistory)
         historyButtonText = findViewById(R.id.textHistory)
-        //museumList = findViewById(R.id.listViewTest)
         linearForSearch = findViewById(R.id.linearForSearch)
         setSupportActionBar(findViewById(R.id.toolBar))
-        val carousel: ImageCarousel = findViewById(R.id.carousel)
+        carousel = findViewById(R.id.carousel)
 
-
-        //val myArrayList = ArrayList<Museum>()
+        // Adicionar nome dos museus a lista
         viewModel.museums.observe(this, Observer { museums ->
-
             courseList = ArrayList()
-
             for (searchMuseum in museums){
                 courseList.add(DiscoveryCardView(searchMuseum.name))
             }
 
-            // on below line we are initializing our list
-
-
+            // Definir gridLayout
             val layoutManager = GridLayoutManager(this, 2)
-
             courseRV.layoutManager = layoutManager
 
-            // on below line we are initializing our adapter
+            // Iniciar o adapter
             courseRVAdapter = AdapterDiscovery(courseList, this)
 
-            // on below line we are setting
-            // adapter to our recycler view.
+            // focar adapter na recycleView
             courseRV.adapter = courseRVAdapter
 
-            // on below line we are adding data to our list
-
-            // on below line we are notifying adapter
-            // that data has been updated.
+            // Notificar o adapter sobre a alteração dos dados
             courseRVAdapter.notifyDataSetChanged()
-            //val myListAdapterName = AdapterTest(this, courseList)
-            //museumList.adapter = myListAdapterName
         })
 
-
-
+        // Criação do carousel
         val list = mutableListOf<CarouselItem>()
         list.add(
             CarouselItem(
                 imageUrl = "https://images.unsplash.com/photo-1532581291347-9c39cf10a73c?w=1080"
-
             )
         )
         list.add(
@@ -111,28 +90,28 @@ open class Discovery : AppCompatActivity() {
         )
         carousel.addData(list)
 
-
+        // Funções de butões
         clickOnHistoryButton()
     }
 
-
+    // dar inflate ao menu
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         return true
     }
 
+    // Mostrar zona de pesquisa
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.search -> if (linearForSearch.isVisible)
                 linearForSearch.visibility = View.GONE
             else
                 linearForSearch.visibility = View.VISIBLE
-
         }
-
         return super.onOptionsItemSelected(item)
     }
 
+    //função de clicar no botão history
     fun clickOnHistoryButton(){
         historyButton.setOnClickListener {
             historyButton.setBackground(ContextCompat.getDrawable(this, R.drawable.button_clicked))
