@@ -13,21 +13,26 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import model.Museum
 import org.imaginativeworld.whynotimagecarousel.CarouselItem
 import org.imaginativeworld.whynotimagecarousel.ImageCarousel
 import viewModels.DiscoveryViewModel
 
 open class Discovery : AppCompatActivity() {
-
+    lateinit var courseRV: RecyclerView
+    lateinit var courseRVAdapter: AdapterDiscovery
+    lateinit var courseList: ArrayList<DiscoveryCardView>
     private lateinit var historyButton: LinearLayout
     private lateinit var linearForSearch : LinearLayout
-    private lateinit var museumList : ListView
+    //private lateinit var museumList : ListView
+
     var viewModel = DiscoveryViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.discovery_page)
-
 
         // base de dados
 
@@ -42,18 +47,50 @@ open class Discovery : AppCompatActivity() {
         })
 
             //-----------------------------------------------------------------------------------------------
+
+        courseRV = findViewById(R.id.idTVCourse)
+
+
+
+
+        //----------------------------------------------------------------------------------------------------
         historyButton = findViewById(R.id.buttonHistory)
-        museumList = findViewById(R.id.listViewTest)
+        //museumList = findViewById(R.id.listViewTest)
         linearForSearch = findViewById(R.id.linearForSearch)
         setSupportActionBar(findViewById(R.id.toolBar))
         val carousel: ImageCarousel = findViewById(R.id.carousel)
 
 
-        val myArrayList = ArrayList<String>()
-        myArrayList.add("ola")
+        //val myArrayList = ArrayList<Museum>()
+        viewModel.museums.observe(this, Observer { museums ->
+            for (searchMuseum in museums){
+                courseList.add(DiscoveryCardView(searchMuseum.name))
+            }
 
-        val myListAdapterName = AdapterTest(this, viewModel.museums)
-        museumList.adapter = myListAdapterName
+            // on below line we are initializing our list
+            courseList = ArrayList()
+
+            val layoutManager = GridLayoutManager(this, 2)
+
+            courseRV.layoutManager = layoutManager
+
+            // on below line we are initializing our adapter
+            courseRVAdapter = AdapterDiscovery(courseList, this)
+
+            // on below line we are setting
+            // adapter to our recycler view.
+            courseRV.adapter = courseRVAdapter
+
+            // on below line we are adding data to our list
+
+            // on below line we are notifying adapter
+            // that data has been updated.
+            courseRVAdapter.notifyDataSetChanged()
+            //val myListAdapterName = AdapterTest(this, courseList)
+            //museumList.adapter = myListAdapterName
+        })
+
+
 
         val list = mutableListOf<CarouselItem>()
         list.add(
