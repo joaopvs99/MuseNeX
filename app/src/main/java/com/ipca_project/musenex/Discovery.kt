@@ -42,13 +42,9 @@ open class Discovery : AppCompatActivity() {
             Toast.makeText(applicationContext, "Entrei aqui!!", Toast.LENGTH_SHORT)
         })
 
-        viewModel.museums.observe(this, Observer { museums ->
-
-        })
-
             //-----------------------------------------------------------------------------------------------
 
-        courseRV = findViewById(R.id.idTVCourse)
+        courseRV = findViewById(R.id.recyclerViewDiscovery)
 
 
 
@@ -63,12 +59,15 @@ open class Discovery : AppCompatActivity() {
 
         //val myArrayList = ArrayList<Museum>()
         viewModel.museums.observe(this, Observer { museums ->
+
+            courseList = ArrayList()
+
             for (searchMuseum in museums){
                 courseList.add(DiscoveryCardView(searchMuseum.name))
             }
 
             // on below line we are initializing our list
-            courseList = ArrayList()
+
 
             val layoutManager = GridLayoutManager(this, 2)
 
