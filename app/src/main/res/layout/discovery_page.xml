@@ -81,8 +81,10 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="History"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:textAppearance="?android:attr/textAppearanceButton"></TextView>
             </LinearLayout>
 
@@ -104,8 +106,10 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="Art"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:textAppearance="?android:attr/textAppearanceButton"></TextView>
             </LinearLayout>
 
@@ -127,8 +131,10 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="Paint"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:textAppearance="?android:attr/textAppearanceButton"></TextView>
             </LinearLayout>
 
@@ -151,8 +157,10 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:text="History"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:textAppearance="?android:attr/textAppearanceButton"></TextView>
             </LinearLayout>
         </LinearLayout>

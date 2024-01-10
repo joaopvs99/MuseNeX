@@ -32,7 +32,6 @@ class AdapterDiscovery(
     override fun onBindViewHolder(holder: AdapterDiscovery.CourseViewHolder, position: Int) {
         // on below line we are setting data to our text view and our image view.
         holder.courseNameTV.text = museumList.get(position).courseName
-
     }
 
     override fun getItemCount(): Int {

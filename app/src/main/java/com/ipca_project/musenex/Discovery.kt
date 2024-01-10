@@ -1,6 +1,8 @@
 package com.ipca_project.musenex
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -9,8 +11,10 @@ import android.widget.Adapter
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.ListView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -25,6 +29,7 @@ open class Discovery : AppCompatActivity() {
     lateinit var courseRVAdapter: AdapterDiscovery
     lateinit var courseList: ArrayList<DiscoveryCardView>
     private lateinit var historyButton: LinearLayout
+    private lateinit var historyButtonText: TextView
     private lateinit var linearForSearch : LinearLayout
     //private lateinit var museumList : ListView
 
@@ -51,6 +56,7 @@ open class Discovery : AppCompatActivity() {
 
         //----------------------------------------------------------------------------------------------------
         historyButton = findViewById(R.id.buttonHistory)
+        historyButtonText = findViewById(R.id.textHistory)
         //museumList = findViewById(R.id.listViewTest)
         linearForSearch = findViewById(R.id.linearForSearch)
         setSupportActionBar(findViewById(R.id.toolBar))
@@ -106,7 +112,7 @@ open class Discovery : AppCompatActivity() {
         carousel.addData(list)
 
 
-        //clickOnHistoryButton()
+        clickOnHistoryButton()
     }
 
 
@@ -127,17 +133,10 @@ open class Discovery : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    /*fun clickOnHistoryButton(){
+    fun clickOnHistoryButton(){
         historyButton.setOnClickListener {
-            viewModel.museums.observe(this, Observer { museums ->
-
-
-
-
-            for (searchMuseum in museums){
-                    Toast.makeText(applicationContext, searchMuseum.name, Toast.LENGTH_SHORT).show()
-                }
-
-            })
-        }*/
+            historyButton.setBackground(ContextCompat.getDrawable(this, R.drawable.button_clicked))
+            historyButtonText.setTextColor(Color.WHITE)
+        }
     }
+}
