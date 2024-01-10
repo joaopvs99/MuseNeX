@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.onboarding1)
         viewModel.museums.observe(this, Observer { museums ->
-            Toast. makeText(applicationContext,"Entrei aqui!!",Toast. LENGTH_SHORT)
+            Toast. makeText(applicationContext,museums[0].toString(),Toast. LENGTH_SHORT)
         })
         viewModel.events.observe(this, Observer { events ->
             Toast. makeText(applicationContext,"Entrei aqui!!",Toast. LENGTH_SHORT)
