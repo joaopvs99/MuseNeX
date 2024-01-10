@@ -1,15 +1,19 @@
 package com.ipca_project.musenex
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Adapter
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import org.imaginativeworld.whynotimagecarousel.CarouselItem
 import org.imaginativeworld.whynotimagecarousel.ImageCarousel
+import viewModels.DiscoveryViewModel
 
 open class Discovery : AppCompatActivity() {
 
@@ -20,14 +24,19 @@ open class Discovery : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.discovery_page)
 
-        museumList = findViewById(R.id.listViewMuseum)
+
+
+        museumList = findViewById(R.id.listViewTest)
         linearForSearch = findViewById(R.id.linearForSearch)
         setSupportActionBar(findViewById(R.id.toolBar))
         val carousel: ImageCarousel = findViewById(R.id.carousel)
 
 
+        val myArrayList = ArrayList<String>()
+        myArrayList.add("ola")
 
-
+        val myListAdapterName = AdapterTest(this, myArrayList)
+        museumList.adapter = myListAdapterName
 
         val list = mutableListOf<CarouselItem>()
         list.add(
@@ -42,7 +51,6 @@ open class Discovery : AppCompatActivity() {
             )
         )
         carousel.addData(list)
-
 
     }
 
