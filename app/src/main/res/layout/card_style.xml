@@ -20,7 +20,7 @@
         <!--on below line we are creating
             a simple text view-->
         <TextView
-            android:id="@+id/idTVCourse"
+            android:id="@+id/TextViewCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

@@ -26,7 +26,7 @@ import viewModels.DiscoveryViewModel
 
 open class Discovery : AppCompatActivity() {
 
-    // Variaveis
+    // Variables
     private lateinit var courseRV: RecyclerView
     private lateinit var courseRVAdapter: AdapterDiscovery
     private lateinit var historyButton: LinearLayout
@@ -34,20 +34,20 @@ open class Discovery : AppCompatActivity() {
     private lateinit var linearForSearch : LinearLayout
     private lateinit var carousel: ImageCarousel
 
-    // Listas
+    // Lists
     private lateinit var courseList: ArrayList<DiscoveryCardView>
 
-    // Ligação base de dados
+    // connect data base
     var viewModel = DiscoveryViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.discovery_page)
 
-        // Iniciar Base de dados
+        // start data base
         viewModel.fetchDiscovery()
 
-        // Iniciar componentes do layout
+        // start layout components
         courseRV = findViewById(R.id.recyclerViewDiscovery)
         historyButton = findViewById(R.id.buttonHistory)
         historyButtonText = findViewById(R.id.textHistory)
@@ -55,28 +55,28 @@ open class Discovery : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolBar))
         carousel = findViewById(R.id.carousel)
 
-        // Adicionar nome dos museus a lista
+        // Add museum names
         viewModel.museums.observe(this, Observer { museums ->
             courseList = ArrayList()
             for (searchMuseum in museums){
                 courseList.add(DiscoveryCardView(searchMuseum.name))
             }
 
-            // Definir gridLayout
+            // Define gridLayout
             val layoutManager = GridLayoutManager(this, 2)
             courseRV.layoutManager = layoutManager
 
-            // Iniciar o adapter
+            // start adapter
             courseRVAdapter = AdapterDiscovery(courseList, this)
 
-            // focar adapter na recycleView
+            // turn adapter to recycleView
             courseRV.adapter = courseRVAdapter
 
-            // Notificar o adapter sobre a alteração dos dados
+            // notify adapter about data changes
             courseRVAdapter.notifyDataSetChanged()
         })
 
-        // Criação do carousel
+        // carousel building
         val list = mutableListOf<CarouselItem>()
         list.add(
             CarouselItem(
@@ -90,17 +90,17 @@ open class Discovery : AppCompatActivity() {
         )
         carousel.addData(list)
 
-        // Funções de butões
+        // button function
         clickOnHistoryButton()
     }
 
-    // dar inflate ao menu
+    // menu inflate
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         return true
     }
 
-    // Mostrar zona de pesquisa
+    // Show search zone
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.search -> if (linearForSearch.isVisible)
@@ -111,7 +111,7 @@ open class Discovery : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    //função de clicar no botão history
+    // clickOnHistoryButton function
     fun clickOnHistoryButton(){
         historyButton.setOnClickListener {
             historyButton.setBackground(ContextCompat.getDrawable(this, R.drawable.button_clicked))

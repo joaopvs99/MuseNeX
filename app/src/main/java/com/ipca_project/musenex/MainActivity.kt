@@ -6,6 +6,9 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import viewModels.DiscoveryViewModel
 
+// kinda inutil esta main mas n sei se vai ser usada por isso...
+
+
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
