@@ -1,6 +1,9 @@
 package model
 
-class Museum(museumId: String, name: String, location: String, description: String, contact: Int, categoryId: String, galery: Array<String>) {
+import java.io.Serializable
+
+class Museum(museumId: String, name: String, location: String, description: String, contact: Int, categoryId: String, galery: Array<String>):
+    Serializable {
     var museumId = museumId
     var name = name
     var location = location

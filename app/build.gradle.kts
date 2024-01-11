@@ -53,9 +53,14 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-auth")
+<<<<<<< HEAD
     //Imports for discovery
     implementation ("me.relex:circleindicator:2.1.6")
     implementation ("com.github.ImaginativeShohag:Why-Not-Image-Carousel:v1.0.0")
     implementation("androidx.gridlayout:gridlayout:1.0.0")
+=======
+    implementation("com.squareup.picasso:picasso:2.8")
+    implementation("io.github.glailton.expandabletextview:expandabletextview:1.0.4")
+>>>>>>> origin/backEndDiscovery
     implementation("androidx.cardview:cardview:1.0.0")
 }

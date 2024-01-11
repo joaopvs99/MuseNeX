@@ -1,6 +1,7 @@
 package viewModels
 
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,6 +10,7 @@ import com.google.firebase.firestore.firestore
 import model.Category
 import model.Event
 import model.Museum
+import model.Piece
 import java.sql.Timestamp
 
 class DiscoveryViewModel {
@@ -17,7 +19,8 @@ class DiscoveryViewModel {
 
     var museums = MutableLiveData<ArrayList<Museum>>()
     var categories = arrayListOf<Category>()
-     var events = MutableLiveData<ArrayList<Event>>()
+    var events = MutableLiveData<ArrayList<Event>>()
+
 
     fun fetchDiscovery() {
         fetchCategories()

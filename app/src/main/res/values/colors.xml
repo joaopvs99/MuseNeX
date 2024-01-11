@@ -2,6 +2,12 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+<<<<<<< HEAD
     <color name="grey">#9C9B9B</color>
     <color name="light_red">#EF3939</color>
+=======
+    <color name="lightGrey">#bababa</color>
+    <color name="selectedButtonColor">#06C1FA</color>
+    <color name="defaultButtonColor">#000000</color>
+>>>>>>> origin/backEndDiscovery
 </resources>
