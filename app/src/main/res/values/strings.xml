@@ -1,7 +1,6 @@
 <resources>
     //atributos Museu
     <string name="app_name">MuseNex</string>
-<<<<<<< HEAD
     <string name="who_we_are">Quem Somos Nós</string>
     <string name="who_we_are_text">Texto apresentação sobre nós</string>
     <string name="objective">O Nosso Objetivo</string>
@@ -9,7 +8,6 @@
     <string name="skip_button">Skip</string>
     <string name="next_button">Next</string>
     <string name="get_started_button">Get Started</string>
-=======
     <string name="museum_name">Name</string>
     <string name="museum_location">Location</string>
     <string name="museum_description">Description</string>
@@ -19,8 +17,5 @@
     <string name="museum_visit">Visit</string>
     <string name="seeAll">See All</string>
     <string name="events">Events</string>
-    <string name="pieces">Pieces of Art</string>
-
-
->>>>>>> origin/backEndDiscovery
+    <string name="pieces">Pieces of Art</string>y
 </resources>

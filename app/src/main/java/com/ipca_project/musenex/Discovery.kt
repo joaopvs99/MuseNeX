@@ -1,41 +1,39 @@
 package com.ipca_project.musenex
 
-import android.content.Intent
+import adapters.AdapterDiscovery
 import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Adapter
-import android.widget.Button
 import android.widget.LinearLayout
-import android.widget.ListView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import model.Museum
-import org.imaginativeworld.whynotimagecarousel.CarouselItem
-import org.imaginativeworld.whynotimagecarousel.ImageCarousel
+import com.gtappdevelopers.kotlingfgproject.DiscoveryEventsModal
+import com.gtappdevelopers.kotlingfgproject.EventsAdapter
 import viewModels.DiscoveryViewModel
 
 open class Discovery : AppCompatActivity() {
 
     // Variables
-    private lateinit var courseRV: RecyclerView
-    private lateinit var courseRVAdapter: AdapterDiscovery
-    private lateinit var historyButton: LinearLayout
-    private lateinit var historyButtonText: TextView
+    private lateinit var MuseumCard: RecyclerView
+    private lateinit var EventsCard: RecyclerView
+    private lateinit var museumAdapter: AdapterDiscovery
+    private lateinit var eventsAdapter: EventsAdapter
+    //private lateinit var historyButton: LinearLayout
+    //private lateinit var historyButtonText: TextView
     private lateinit var linearForSearch : LinearLayout
-    private lateinit var carousel: ImageCarousel
+
 
     // Lists
-    private lateinit var courseList: ArrayList<DiscoveryCardView>
+    private lateinit var MuseumList: ArrayList<DiscoveryCardView>
+    private lateinit var EventList: ArrayList<DiscoveryEventsModal>
 
     // connect data base
     var viewModel = DiscoveryViewModel()
@@ -48,50 +46,61 @@ open class Discovery : AppCompatActivity() {
         viewModel.fetchDiscovery()
 
         // start layout components
-        courseRV = findViewById(R.id.recyclerViewDiscovery)
-        historyButton = findViewById(R.id.buttonHistory)
-        historyButtonText = findViewById(R.id.textHistory)
+        EventsCard = findViewById(R.id.DiscoveryEventsList)
+        MuseumCard = findViewById(R.id.recyclerViewDiscovery)
+        //historyButton = findViewById(R.id.buttonHistory)
+        //historyButtonText = findViewById(R.id.textHistory)
         linearForSearch = findViewById(R.id.linearForSearch)
         setSupportActionBar(findViewById(R.id.toolBar))
-        carousel = findViewById(R.id.carousel)
 
         // Add museum names
         viewModel.museums.observe(this, Observer { museums ->
-            courseList = ArrayList()
+            MuseumList = ArrayList()
             for (searchMuseum in museums){
-                courseList.add(DiscoveryCardView(searchMuseum.name))
+                MuseumList.add(DiscoveryCardView(searchMuseum.museumId, searchMuseum.name))
             }
 
             // Define gridLayout
             val layoutManager = GridLayoutManager(this, 2)
-            courseRV.layoutManager = layoutManager
+            MuseumCard.layoutManager = layoutManager
 
             // start adapter
-            courseRVAdapter = AdapterDiscovery(courseList, this)
+            museumAdapter = AdapterDiscovery(MuseumList, this)
 
             // turn adapter to recycleView
-            courseRV.adapter = courseRVAdapter
+            MuseumCard.adapter = museumAdapter
 
             // notify adapter about data changes
-            courseRVAdapter.notifyDataSetChanged()
+            museumAdapter.notifyDataSetChanged()
         })
 
         // carousel building
-        val list = mutableListOf<CarouselItem>()
-        list.add(
-            CarouselItem(
-                imageUrl = "https://images.unsplash.com/photo-1532581291347-9c39cf10a73c?w=1080"
-            )
-        )
-        list.add(
-            CarouselItem(
-                imageUrl = "https://images.unsplash.com/photo-1534447677768-be436bb09401?w=1080"
-            )
-        )
-        carousel.addData(list)
+        viewModel.events.observe(this, Observer { events ->
+            EventList = ArrayList()
+            for (searchEvent in events){
+                EventList.add(DiscoveryEventsModal(EventName = searchEvent.name, EventDate = searchEvent.date_event_beg, EventLoc = searchEvent.museumId, EventImg = searchEvent.galeryEvent))
+            }
+
+            val mLayoutManager = LinearLayoutManager(applicationContext)
+            mLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+            EventsCard.layoutManager = mLayoutManager
+
+            // start adapter
+            eventsAdapter = EventsAdapter(EventList, MuseumList,this)
+
+            // turn adapter to recycleView
+            EventsCard.adapter = eventsAdapter
+
+            // notify adapter about data changes
+            eventsAdapter.notifyDataSetChanged()
+        })
+
+
+
+
 
         // button function
-        clickOnHistoryButton()
+        //clickOnHistoryButton()
     }
 
     // menu inflate
@@ -112,10 +121,10 @@ open class Discovery : AppCompatActivity() {
     }
 
     // clickOnHistoryButton function
-    fun clickOnHistoryButton(){
+    /*fun clickOnHistoryButton(){
         historyButton.setOnClickListener {
             historyButton.setBackground(ContextCompat.getDrawable(this, R.drawable.button_clicked))
             historyButtonText.setTextColor(Color.WHITE)
         }
-    }
+    }*/
 }

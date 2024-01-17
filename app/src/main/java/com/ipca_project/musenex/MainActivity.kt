@@ -20,9 +20,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.onboarding1)
         viewModel.museums.observe(this, Observer { museums ->
-<<<<<<< HEAD
-            Toast. makeText(applicationContext,museums[0].toString(),Toast. LENGTH_SHORT)
-=======
             if (events.isNotEmpty()) {
                 val intent = Intent(this,MuseumPageActivity::class.java)
                 intent.putExtra("Museu",museums[0])
@@ -31,7 +28,6 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             this.museums = museums
->>>>>>> origin/backEndDiscovery
         })
         viewModel.events.observe(this, Observer { events ->
             if (museums.isNotEmpty()) {
