@@ -50,7 +50,8 @@ class EventsAdapter(
         }
 
 
-        holder.TextViewDate.text = SimpleDateFormat("dd/MM/yyyy").format(courseList.get(position).EventDate)
+        holder.TextViewDateBeg.text = SimpleDateFormat("dd/MM/yyyy").format(courseList.get(position).EventDateBeg)
+        holder.TextViewDateEnd.text = SimpleDateFormat("dd/MM/yyyy").format(courseList.get(position).EventDateEnd)
         val galleryItem = courseList.get(position).EventImg
         Picasso.get().load(galleryItem[0]).resize(1920, 1080).centerInside().into(holder.ImageEvent)
     }
@@ -65,7 +66,8 @@ class EventsAdapter(
         // on below line we are initializing our course name text view and our image view.
         val TextViewName: TextView = itemView.findViewById(R.id.textView1Name)
         val TextViewLoc: TextView = itemView.findViewById(R.id.textViewLoc)
-        val TextViewDate: TextView = itemView.findViewById(R.id.textViewDate)
+        val TextViewDateBeg: TextView = itemView.findViewById(R.id.textViewDate)
+        val TextViewDateEnd: TextView = itemView.findViewById(R.id.textViewDateEnd)
         val ImageEvent: ImageView = itemView.findViewById(R.id.imageViewEvent)
     }
 }

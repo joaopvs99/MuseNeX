@@ -15,17 +15,21 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.gtappdevelopers.kotlingfgproject.CategoryAdapter
 import com.gtappdevelopers.kotlingfgproject.DiscoveryEventsModal
 import com.gtappdevelopers.kotlingfgproject.EventsAdapter
 import viewModels.DiscoveryViewModel
+import java.util.Locale.Category
 
 open class Discovery : AppCompatActivity() {
 
     // Variables
     private lateinit var MuseumCard: RecyclerView
     private lateinit var EventsCard: RecyclerView
+    private lateinit var CategoryCard: RecyclerView
     private lateinit var museumAdapter: AdapterDiscovery
     private lateinit var eventsAdapter: EventsAdapter
+    private lateinit var categoryAdapter: CategoryAdapter
     //private lateinit var historyButton: LinearLayout
     //private lateinit var historyButtonText: TextView
     private lateinit var linearForSearch : LinearLayout
@@ -34,6 +38,7 @@ open class Discovery : AppCompatActivity() {
     // Lists
     private lateinit var MuseumList: ArrayList<DiscoveryCardView>
     private lateinit var EventList: ArrayList<DiscoveryEventsModal>
+    private lateinit var CategoryList: ArrayList<DiscoveryCategoryView>
 
     // connect data base
     var viewModel = DiscoveryViewModel()
@@ -48,12 +53,53 @@ open class Discovery : AppCompatActivity() {
         // start layout components
         EventsCard = findViewById(R.id.DiscoveryEventsList)
         MuseumCard = findViewById(R.id.recyclerViewDiscovery)
-        //historyButton = findViewById(R.id.buttonHistory)
-        //historyButtonText = findViewById(R.id.textHistory)
+        CategoryCard = findViewById(R.id.DiscoveryCategoriesList)
         linearForSearch = findViewById(R.id.linearForSearch)
         setSupportActionBar(findViewById(R.id.toolBar))
 
-        // Add museum names
+        //Category Buttons
+        viewModel.categories.observe(this, Observer { categories ->
+            CategoryList = ArrayList()
+            for (searchCategory in categories){
+                CategoryList.add(DiscoveryCategoryView(searchCategory.name))
+            }
+
+            val mLayoutManager = LinearLayoutManager(applicationContext)
+            mLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+            CategoryCard.layoutManager = mLayoutManager
+
+            // start adapter
+            categoryAdapter = CategoryAdapter(CategoryList,this)
+
+            // turn adapter to recycleView
+            CategoryCard.adapter = categoryAdapter
+
+            // notify adapter about data changes
+            categoryAdapter.notifyDataSetChanged()
+        })
+
+        // Horizontal Cards building (Events)
+        viewModel.events.observe(this, Observer { events ->
+            EventList = ArrayList()
+            for (searchEvent in events){
+                EventList.add(DiscoveryEventsModal(EventName = searchEvent.name, EventDateBeg = searchEvent.date_event_beg, EventDateEnd = searchEvent.date_event_end, EventLoc = searchEvent.museumId, EventImg = searchEvent.galeryEvent))
+            }
+
+            val mLayoutManager = LinearLayoutManager(applicationContext)
+            mLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+            EventsCard.layoutManager = mLayoutManager
+
+            // start adapter
+            eventsAdapter = EventsAdapter(EventList, MuseumList,this)
+
+            // turn adapter to recycleView
+            EventsCard.adapter = eventsAdapter
+
+            // notify adapter about data changes
+            eventsAdapter.notifyDataSetChanged()
+        })
+
+        // Vertical Cards Building (Museums)
         viewModel.museums.observe(this, Observer { museums ->
             MuseumList = ArrayList()
             for (searchMuseum in museums){
@@ -73,31 +119,6 @@ open class Discovery : AppCompatActivity() {
             // notify adapter about data changes
             museumAdapter.notifyDataSetChanged()
         })
-
-        // carousel building
-        viewModel.events.observe(this, Observer { events ->
-            EventList = ArrayList()
-            for (searchEvent in events){
-                EventList.add(DiscoveryEventsModal(EventName = searchEvent.name, EventDate = searchEvent.date_event_beg, EventLoc = searchEvent.museumId, EventImg = searchEvent.galeryEvent))
-            }
-
-            val mLayoutManager = LinearLayoutManager(applicationContext)
-            mLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-            EventsCard.layoutManager = mLayoutManager
-
-            // start adapter
-            eventsAdapter = EventsAdapter(EventList, MuseumList,this)
-
-            // turn adapter to recycleView
-            EventsCard.adapter = eventsAdapter
-
-            // notify adapter about data changes
-            eventsAdapter.notifyDataSetChanged()
-        })
-
-
-
-
 
         // button function
         //clickOnHistoryButton()

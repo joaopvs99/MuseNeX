@@ -18,12 +18,14 @@ class DiscoveryViewModel {
     private val db = Firebase.firestore
 
     var museums = MutableLiveData<ArrayList<Museum>>()
-    var categories = arrayListOf<Category>()
+    var categories = MutableLiveData<ArrayList<Category>>()
+    var categoriesaux = arrayListOf<Category>()
     var events = MutableLiveData<ArrayList<Event>>()
 
 
     fun fetchDiscovery() {
         fetchCategories()
+        fetchCategoryAux()
     }
 
     private fun fetchCategories() {
@@ -31,15 +33,33 @@ class DiscoveryViewModel {
             .get()
             .addOnSuccessListener { result ->
                 for (document in result) {
-                    categories.add(
+                    categoriesaux.add(
                         Category(
                             document.id,
                             document.data["nome"].toString()
                         )
                     )
                 }
+
                 fetchMuseums()
                 fetchEvents()
+            }
+            .addOnFailureListener { exception ->
+                Log.w(ContentValues.TAG, "Error getting documents.", exception)
+            }
+    }
+
+    private fun fetchCategoryAux() {
+        var aux = arrayListOf<Category>()
+        db.collection("Categorias")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    aux.add(Category(document.id,
+                        document.data["nome"].toString()
+                    ))
+                }
+                categories.value = aux
             }
             .addOnFailureListener { exception ->
                 Log.w(ContentValues.TAG, "Error getting documents.", exception)
@@ -100,7 +120,7 @@ class DiscoveryViewModel {
     {
         for (museum in museums) {
             var categoryName: String =
-                categories.filter { s -> s.categoryId == museum.categoryId }.single().name
+                categoriesaux.filter { s -> s.categoryId == museum.categoryId }.single().name
             museum.categoryName = categoryName
         }
         return museums
@@ -109,7 +129,7 @@ class DiscoveryViewModel {
     {
         for (event in events) {
             var categoryName: String =
-                categories.filter { s -> s.categoryId == event.categoryId }.single().name
+                categoriesaux.filter { s -> s.categoryId == event.categoryId }.single().name
             event.categoryName = categoryName
         }
         return events
