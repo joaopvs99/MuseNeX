@@ -39,7 +39,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView"
-            tools:text="Some date" />
+            tools:text="@string/text" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -60,5 +60,7 @@ dependencies {
     implementation ("com.google.android.gms:play-services-maps:17.0.1")
     implementation ("org.osmdroid:osmdroid-android:6.1.14")
     implementation ("androidx.preference:preference-ktx:1.1.1")
+    implementation ("com.google.android.exoplayer:exoplayer:2.18.0")
+    implementation ("com.google.android.exoplayer:exoplayer-ui:2.18.0")
 
 }

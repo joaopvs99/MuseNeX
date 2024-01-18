@@ -16,8 +16,7 @@ import model.Event
 import model.Piece
 
 class FragmentCollections: Fragment() {
-    val event: Array<Event> = arrayOf()
-    val piece: Array<Piece> = arrayOf()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,7 +39,7 @@ class FragmentCollections: Fragment() {
         val artworksRecyclerView: RecyclerView = view.findViewById(R.id.piecesView)
         val artworksLayoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         artworksRecyclerView.layoutManager = artworksLayoutManager
-        val artworksAdapter = PieceAdapter(receivedPieces)
+        val artworksAdapter = PieceAdapter(requireContext(), receivedPieces)
         artworksRecyclerView.adapter = artworksAdapter
         snapHelper.attachToRecyclerView(artworksRecyclerView)
 

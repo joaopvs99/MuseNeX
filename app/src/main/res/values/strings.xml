@@ -20,8 +20,12 @@
                                 sexta       10:00-17:30\n\n
                                 sábado      10:00-20:00\n\n</string>
     <string name="button_3d">3D</string>
-
-
-
+    <string name="ranking">See All</string>
+    <string name="idioma">Idioma</string>
+    <string name="ex_text">Expandable Text</string>
+    <string name="showPlayer">Listen Audio</string>
+    <string name="idiomaPt">PT</string>
+    <string name="idiomaEng">ENG</string>
+    <string name="text">Text</string>
 
 </resources>

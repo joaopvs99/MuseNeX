@@ -63,7 +63,7 @@
                 android:layout_marginEnd="30dp"
                 android:layout_marginBottom="16dp"
                 android:minHeight="48dp"
-                android:text="This is a text view"
+                android:text="@string/ex_text"
                 android:textSize="14sp"
                 android:textStyle="normal"
                 app:ellipsizeTextColor="#050505"
@@ -123,7 +123,6 @@
                 android:layout_gravity="end"
                 android:layout_weight="1"
                 android:minHeight="200dp"></FrameLayout>
-
         </LinearLayout>
     </ScrollView>
 

@@ -1,3 +1,4 @@
+import android.content.Context
 import android.graphics.Rect
 import org.osmdroid.config.Configuration
 import android.location.Geocoder
@@ -7,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import android.widget.Toast.LENGTH_SHORT
 import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -25,7 +28,6 @@ import org.osmdroid.views.overlay.Marker
 class FragmentVisit : Fragment() {
 
     private lateinit var mapView: MapView
-    private lateinit var googleMap: GoogleMap
     private lateinit var museum: Museum
     private lateinit var contactTV: TextView
 
@@ -73,15 +75,18 @@ class FragmentVisit : Fragment() {
                     marker.position = org.osmdroid.util.GeoPoint(latitude, longitude)
                     marker.title = address
                     mapView.overlays.add(marker)
-                } else {
-                    // Caso a geocodificação não retorne resultados válidos
-                    // Exiba uma mensagem de erro ou tome a ação apropriada
                 }
             }
         } catch (e: IOException) {
             e.printStackTrace()
-            // Trate exceções de geocodificação
+            showToast()
         }
     }
+    private fun showToast() {
+        var text = "Erro ao tentar obter a localização. Verifique a conexão de rede."
+        var duration = Toast.LENGTH_SHORT
+        var toast = Toast.makeText(requireContext(),text,duration)
+        toast.show()
 
+    }
 }

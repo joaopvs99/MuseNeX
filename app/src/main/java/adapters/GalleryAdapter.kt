@@ -21,7 +21,7 @@ internal class GalleryAdapter(private var galleryList: Array<String>) :
     }
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val galleryItem = galleryList[position]
-        Picasso.get().load(galleryItem).resize(120, 120).centerInside().into(holder.image)
+        Picasso.get().load(galleryItem).into(holder.image)
     }
     override fun getItemCount(): Int {
         return galleryList.size
