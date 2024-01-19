@@ -44,8 +44,8 @@ class EventsAdapter(
 
 
         for(searchMuseum in museumList){
-            if (searchMuseum.museumId == courseList.get(position).EventLoc) {
-                holder.TextViewLoc.text = searchMuseum.museumName
+            if (searchMuseum.MuseumId == courseList.get(position).EventLoc) {
+                holder.TextViewLoc.text = searchMuseum.MuseumName
             }
         }
 

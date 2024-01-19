@@ -8,20 +8,22 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SnapHelper
 import com.gtappdevelopers.kotlingfgproject.CategoryAdapter
 import com.gtappdevelopers.kotlingfgproject.DiscoveryEventsModal
 import com.gtappdevelopers.kotlingfgproject.EventsAdapter
 import viewModels.DiscoveryViewModel
-import java.util.Locale.Category
 
-open class Discovery : AppCompatActivity() {
+open class Discovery : AppCompatActivity(), CategoryAdapter.OnItemClickListener {
 
     // Variables
     private lateinit var MuseumCard: RecyclerView
@@ -30,9 +32,9 @@ open class Discovery : AppCompatActivity() {
     private lateinit var museumAdapter: AdapterDiscovery
     private lateinit var eventsAdapter: EventsAdapter
     private lateinit var categoryAdapter: CategoryAdapter
-    //private lateinit var historyButton: LinearLayout
-    //private lateinit var historyButtonText: TextView
     private lateinit var linearForSearch : LinearLayout
+    private lateinit var buttonCategory: LinearLayout
+    private lateinit var buttonCategoryText: TextView
 
 
     // Lists
@@ -69,7 +71,7 @@ open class Discovery : AppCompatActivity() {
             CategoryCard.layoutManager = mLayoutManager
 
             // start adapter
-            categoryAdapter = CategoryAdapter(CategoryList,this)
+            categoryAdapter = CategoryAdapter(CategoryList,this, this)
 
             // turn adapter to recycleView
             CategoryCard.adapter = categoryAdapter
@@ -82,12 +84,19 @@ open class Discovery : AppCompatActivity() {
         viewModel.events.observe(this, Observer { events ->
             EventList = ArrayList()
             for (searchEvent in events){
-                EventList.add(DiscoveryEventsModal(EventName = searchEvent.name, EventDateBeg = searchEvent.date_event_beg, EventDateEnd = searchEvent.date_event_end, EventLoc = searchEvent.museumId, EventImg = searchEvent.galeryEvent))
+                EventList.add(DiscoveryEventsModal(
+                    EventName = searchEvent.name,
+                    EventDateBeg = searchEvent.date_event_beg,
+                    EventDateEnd = searchEvent.date_event_end,
+                    EventLoc = searchEvent.museumId,
+                    EventImg = searchEvent.galeryEvent))
             }
 
             val mLayoutManager = LinearLayoutManager(applicationContext)
             mLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
             EventsCard.layoutManager = mLayoutManager
+            val snapHelper: SnapHelper = PagerSnapHelper()
+            snapHelper.attachToRecyclerView(EventsCard)
 
             // start adapter
             eventsAdapter = EventsAdapter(EventList, MuseumList,this)
@@ -103,7 +112,10 @@ open class Discovery : AppCompatActivity() {
         viewModel.museums.observe(this, Observer { museums ->
             MuseumList = ArrayList()
             for (searchMuseum in museums){
-                MuseumList.add(DiscoveryCardView(searchMuseum.museumId, searchMuseum.name))
+                MuseumList.add(DiscoveryCardView(
+                    MuseumId = searchMuseum.museumId,
+                    MuseumName = searchMuseum.name,
+                    MuseumImg = searchMuseum.galery))
             }
 
             // Define gridLayout
@@ -119,9 +131,14 @@ open class Discovery : AppCompatActivity() {
             // notify adapter about data changes
             museumAdapter.notifyDataSetChanged()
         })
+    }
 
-        // button function
-        //clickOnHistoryButton()
+    // button function
+    override fun OnItemClick(position: Int) {
+        Toast.makeText(this, "Item $position", Toast.LENGTH_SHORT).show()
+        val clickedItem = CategoryList[position]
+        clickedItem.name = "clicked"
+        categoryAdapter.notifyItemChanged(position)
     }
 
     // menu inflate
@@ -140,12 +157,4 @@ open class Discovery : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-
-    // clickOnHistoryButton function
-    /*fun clickOnHistoryButton(){
-        historyButton.setOnClickListener {
-            historyButton.setBackground(ContextCompat.getDrawable(this, R.drawable.button_clicked))
-            historyButtonText.setTextColor(Color.WHITE)
-        }
-    }*/
 }
