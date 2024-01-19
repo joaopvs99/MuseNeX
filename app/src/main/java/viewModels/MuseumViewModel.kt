@@ -11,7 +11,6 @@ import model.Piece
 
 class MuseumViewModel {
     private val db = Firebase.firestore
-
     var pieces = MutableLiveData<ArrayList<Piece>>()
 
      fun fetchPieces() {
@@ -29,8 +28,9 @@ class MuseumViewModel {
                         document.data["autor_id"].toString(),
                         document.data["museu_id"].toString(),
                         document.data["categoria_id"].toString(),
-                        document.data["audioUrl"].toString(),
-                        document.data["foto_url"].toString()
+                        document.data["audio_url"].toString(),
+                        document.data["foto_url"].toString(),
+                        document.data["engDescription"].toString(),
                     )
                     )
                 }

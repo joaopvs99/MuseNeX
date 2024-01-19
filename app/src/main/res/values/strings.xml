@@ -17,5 +17,26 @@
     <string name="museum_visit">Visit</string>
     <string name="seeAll">See All</string>
     <string name="events">Events</string>
+<<<<<<< HEAD
     <string name="pieces">Pieces of Art</string>y
+=======
+    <string name="pieces">Pieces of Art</string>
+    <string name="horario">Horario de funcionamento</string>
+    <string name="horarios">    domingo     10:00-17:30\n\n
+                                segunda     10:00-17:30\n\n
+                                terça       10:00-17:30\n\n
+                                quarta      10:00-17:30\n\n
+                                quinta      10:00-17:30\n\n
+                                sexta       10:00-17:30\n\n
+                                sábado      10:00-20:00\n\n</string>
+    <string name="button_3d">3D</string>
+    <string name="ranking">See All</string>
+    <string name="idioma">Idioma</string>
+    <string name="ex_text">Expandable Text</string>
+    <string name="showPlayer">Listen Audio</string>
+    <string name="idiomaPt">PT</string>
+    <string name="idiomaEng">ENG</string>
+    <string name="text">Text</string>
+
+>>>>>>> origin/main
 </resources>

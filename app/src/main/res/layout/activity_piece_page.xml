@@ -18,22 +18,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-    <TextView
-        android:id="@+id/button_3d"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_3d"
-        android:textColor="@color/logoColor"
-        android:textSize="24dp"
-        android:layout_gravity="end"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/rounded_corners"
-        android:textStyle="bold"
-        >
-    </TextView>
-
     </androidx.appcompat.widget.Toolbar>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -47,19 +33,58 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/eventsList"
+            <ImageView
+                android:id="@+id/imagePiece"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:minHeight="380dp"
+                android:scrollbars="none" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:minHeight="400dp"
-                android:scrollbars="none" />
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="30dp"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/btnStart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:src="@android:drawable/btn_star_big_on"
+                    android:backgroundTint="@android:color/transparent"/>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <Button
+                    android:id="@+id/btnPT"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:backgroundTint="@android:color/transparent"
+                    android:text="@string/idiomaPt" />
+
+                <Button
+                    android:id="@+id/btnENG"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:backgroundTint="@android:color/transparent"
+                    android:text="@string/idiomaEng" />
+            </LinearLayout>
+
 
             <io.github.glailton.expandabletextview.ExpandableTextView
                 android:id="@+id/expand_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginEnd="30dp"
                 android:layout_marginBottom="16dp"
                 android:minHeight="48dp"
@@ -80,50 +105,34 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp"
-                android:orientation="horizontal"
-                android:weightSum="2">
+                android:orientation="vertical">
 
                 <Button
-                    android:id="@+id/buttonCollections"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/btnShowPlayer"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"
-                    android:backgroundTint="@android:color/transparent"
-                    android:fontFamily="sans-serif-black"
-                    android:text="@string/museum_colection"
-                    android:textAlignment="viewStart"
-                    android:textColor="@color/lightGrey"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:cornerRadius="0dp" />
-
-                <Button
-                    android:id="@+id/buttonVisit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@android:color/transparent"
-                    android:backgroundTint="@android:color/transparent"
-                    android:fontFamily="sans-serif-black"
-                    android:text="@string/museum_visit"
-                    android:textAlignment="viewEnd"
-                    android:textColor="@color/lightGrey"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:cornerRadius="0dp"></Button>
+                    android:text="@string/showPlayer"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"/>
             </LinearLayout>
-
-            <FrameLayout
-                android:id="@+id/container"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="end"
-                android:layout_weight="1"
-                android:minHeight="200dp"></FrameLayout>
         </LinearLayout>
     </ScrollView>
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_gravity="end"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
+        <com.google.android.exoplayer2.ui.StyledPlayerView
+            android:id="@+id/styledPlayer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:surface_type="texture_view"
+            app:shutter_background_color="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

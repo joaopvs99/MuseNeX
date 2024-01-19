@@ -1,6 +1,7 @@
 package com.ipca_project.musenex
 
 
+import FragmentVisit
 import adapters.GalleryAdapter
 import android.os.Bundle
 import android.widget.Button
@@ -13,7 +14,6 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 import Fragments.FragmentCollections
-import Fragments.FragmentVisit
 import adapters.DotsIndicatorDecoration
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -51,7 +51,7 @@ class MuseumPageActivity : AppCompatActivity() {
             val fragment = FragmentCollections()
             val bundle = Bundle()
             bundle.putSerializable("events", event)
-            bundle.putSerializable("pieces", pieces)
+            bundle.putSerializable("pieces", this.pieces)
             fragment.arguments = bundle
 
             supportFragmentManager.beginTransaction()
@@ -108,8 +108,12 @@ class MuseumPageActivity : AppCompatActivity() {
         visitButton.setOnClickListener {
             setButtonSelected(visitButton)
             setButtonUnselected(collectionButton)
+            val fragment = FragmentVisit()
+            val bundle = Bundle()
+            bundle.putSerializable("museum", museum)
+            fragment.arguments = bundle
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, FragmentVisit())
+                .replace(R.id.container, fragment)
                 .addToBackStack(null)
                 .commit()
         }
