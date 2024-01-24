@@ -49,7 +49,6 @@ class EventsAdapter(
             }
         }
 
-
         holder.TextViewDateBeg.text = SimpleDateFormat("dd/MM/yyyy").format(courseList.get(position).EventDateBeg)
         holder.TextViewDateEnd.text = SimpleDateFormat("dd/MM/yyyy").format(courseList.get(position).EventDateEnd)
         val galleryItem = courseList.get(position).EventImg

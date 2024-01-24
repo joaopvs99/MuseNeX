@@ -1,6 +1,7 @@
 package com.ipca_project.musenex
 
 import adapters.AdapterDiscovery
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
@@ -33,9 +34,7 @@ open class Discovery : AppCompatActivity(), CategoryAdapter.OnItemClickListener 
     private lateinit var eventsAdapter: EventsAdapter
     private lateinit var categoryAdapter: CategoryAdapter
     private lateinit var linearForSearch : LinearLayout
-    private lateinit var buttonCategory: LinearLayout
-    private lateinit var buttonCategoryText: TextView
-
+    private var clickedPosition: Int = 0
 
     // Lists
     private lateinit var MuseumList: ArrayList<DiscoveryCardView>
@@ -89,7 +88,9 @@ open class Discovery : AppCompatActivity(), CategoryAdapter.OnItemClickListener 
                     EventDateBeg = searchEvent.date_event_beg,
                     EventDateEnd = searchEvent.date_event_end,
                     EventLoc = searchEvent.museumId,
-                    EventImg = searchEvent.galeryEvent))
+                    EventImg = searchEvent.galeryEvent)
+                )
+
             }
 
             val mLayoutManager = LinearLayoutManager(applicationContext)
@@ -135,10 +136,64 @@ open class Discovery : AppCompatActivity(), CategoryAdapter.OnItemClickListener 
 
     // button function
     override fun OnItemClick(position: Int) {
-        Toast.makeText(this, "Item $position", Toast.LENGTH_SHORT).show()
-        val clickedItem = CategoryList[position]
-        clickedItem.name = "clicked"
-        categoryAdapter.notifyItemChanged(position)
+        clickedPosition = position
+
+        
+
+        val sharedPreference = getSharedPreferences("PreferencesForTable", Context.MODE_PRIVATE)
+        var editor = sharedPreference.edit()
+        editor.putInt("positionClicked", position)
+        editor.apply()
+
+        // Vertical Cards Building (Museums)
+        viewModel.museums.observe(this, Observer { museums ->
+            MuseumList = ArrayList()
+            for (searchMuseum in museums){
+
+                Toast.makeText(this, searchMuseum.categoryName, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, CategoryList[position].name, Toast.LENGTH_SHORT).show()
+
+                if (searchMuseum.categoryName == CategoryList[position].name) {
+                    MuseumList.add(
+                        DiscoveryCardView(
+                            MuseumId = searchMuseum.museumId,
+                            MuseumName = searchMuseum.name,
+                            MuseumImg = searchMuseum.galery
+                        )
+                    )
+                }
+            }
+
+            // start adapter
+            museumAdapter = AdapterDiscovery(MuseumList, this)
+
+            // turn adapter to recycleView
+            MuseumCard.adapter = museumAdapter
+            museumAdapter.notifyDataSetChanged()
+        })
+
+        viewModel.events.observe(this, Observer { events ->
+            EventList = ArrayList()
+            for (searchEvent in events){
+                if (searchEvent.categoryName == CategoryList[position].name){
+                    EventList.add(DiscoveryEventsModal(
+                        EventName = searchEvent.name,
+                        EventDateBeg = searchEvent.date_event_beg,
+                        EventDateEnd = searchEvent.date_event_end,
+                        EventLoc = searchEvent.museumId,
+                        EventImg = searchEvent.galeryEvent))
+                }
+            }
+            // start adapter
+            eventsAdapter = EventsAdapter(EventList, MuseumList,this)
+
+            // turn adapter to recycleView
+            EventsCard.adapter = eventsAdapter
+            // notify adapter about data changes
+            eventsAdapter.notifyDataSetChanged()
+        })
+
+        categoryAdapter.notifyDataSetChanged()
     }
 
     // menu inflate

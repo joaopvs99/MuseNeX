@@ -5,12 +5,12 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/buttonHistory"
+        android:id="@+id/categoryButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/button_border"
-        android:clickable="true"
-        android:layout_marginRight="20dp"
+        android:clickable="false"
+        android:layout_marginEnd="20dp"
         android:scrollbarTrackHorizontal="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,7 +21,6 @@
             android:id="@+id/textCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
             android:layout_marginRight="10dp"

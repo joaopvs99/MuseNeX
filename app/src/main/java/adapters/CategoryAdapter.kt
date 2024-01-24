@@ -1,13 +1,17 @@
 package com.gtappdevelopers.kotlingfgproject
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.ipca_project.musenex.DiscoveryCardView
 import com.ipca_project.musenex.DiscoveryCategoryView
@@ -34,22 +38,12 @@ class CategoryAdapter (
         return CategoryViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
-
-        holder.TextViewName.text = categoryList.get(position).name
-
-    }
-
-    override fun getItemCount(): Int {
-
-        return categoryList.size
-    }
-
-
     inner class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         OnClickListener {
 
         val TextViewName: TextView = itemView.findViewById(R.id.textCategory)
+        val CategoryButton: LinearLayout = itemView.findViewById(R.id.categoryButton)
+
 
         init {
             itemView.setOnClickListener(this)
@@ -61,7 +55,28 @@ class CategoryAdapter (
             if (position != RecyclerView.NO_POSITION) {
                 listener.OnItemClick(position)
             }
+
+            CategoryButton.setBackground(ContextCompat.getDrawable(context, R.drawable.button_border_filled))
+            TextViewName.setTextColor(Color.WHITE)
         }
+    }
+
+    override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
+
+        val TextViewName: TextView = holder.TextViewName
+        val CategoryButton: LinearLayout = holder.CategoryButton
+
+       var ClickedPosition = context.getSharedPreferences("PreferencesForTable",Context.MODE_PRIVATE).getInt("positionClicked", -1)
+        if (ClickedPosition != position){
+            CategoryButton.setBackground(ContextCompat.getDrawable(context, R.drawable.button_border))
+            TextViewName.setTextColor(Color.BLACK)
+        }
+        holder.TextViewName.text = categoryList.get(position).name
+    }
+
+    override fun getItemCount(): Int {
+
+        return categoryList.size
     }
 
     interface OnItemClickListener {
