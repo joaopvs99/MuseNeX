@@ -73,9 +73,9 @@ class MuseumPageActivity : AppCompatActivity() {
         recyclerView.adapter = galleryAdapter
         recyclerView.addItemDecoration(
             DotsIndicatorDecoration(
-            colorInactive = ContextCompat.getColor(this, R.color.lightGrey),
-            colorActive = ContextCompat.getColor(this, R.color.black)
-        )
+                colorInactive = ContextCompat.getColor(this, R.color.lightGrey),
+                colorActive = ContextCompat.getColor(this, R.color.black)
+            )
         )
 
         //Expanded TextView

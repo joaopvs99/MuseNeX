@@ -26,7 +26,7 @@ class FragmentCollections: Fragment() {
         val receivedData = arguments?.getSerializable("events") as ArrayList<Event>
         val receivedPieces = arguments?.getSerializable("pieces") as ArrayList<Piece>
 
-        // Configurar RecyclerView para eventos
+        // Configure RecyclerView for events
         val eventsRecyclerView: RecyclerView = view.findViewById(R.id.eventsList)
         val eventsLayoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         eventsRecyclerView.layoutManager = eventsLayoutManager
@@ -35,7 +35,7 @@ class FragmentCollections: Fragment() {
         var snapHelper: SnapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(eventsRecyclerView)
 
-        // Configurar RecyclerView para obras
+        // Configure RecyclerView for the pieces of art
         val artworksRecyclerView: RecyclerView = view.findViewById(R.id.piecesView)
         val artworksLayoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         artworksRecyclerView.layoutManager = artworksLayoutManager
