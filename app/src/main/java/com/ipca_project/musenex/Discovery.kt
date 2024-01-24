@@ -2,6 +2,7 @@ package com.ipca_project.musenex
 
 import adapters.AdapterDiscovery
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
@@ -22,6 +23,7 @@ import androidx.recyclerview.widget.SnapHelper
 import com.gtappdevelopers.kotlingfgproject.CategoryAdapter
 import com.gtappdevelopers.kotlingfgproject.DiscoveryEventsModal
 import com.gtappdevelopers.kotlingfgproject.EventsAdapter
+import model.Event
 import viewModels.DiscoveryViewModel
 
 open class Discovery : AppCompatActivity(), CategoryAdapter.OnItemClickListener {
@@ -104,6 +106,21 @@ open class Discovery : AppCompatActivity(), CategoryAdapter.OnItemClickListener 
 
             // turn adapter to recycleView
             EventsCard.adapter = eventsAdapter
+            eventsAdapter.setOnClickListener(object : EventsAdapter.onItemClickListener{
+                override fun onItemClick(position: Int) {
+
+                    /*
+                    //send data
+                    val intent = Intent(this@Discovery,MuseumPageActivity::class.java)
+                    intent.putExtra("Museu",MuseumList[1])
+                    val filteredEvents: List<Event> = events.filter { it.museumId == museums[1].museumId }
+                    intent.putExtra("Events", ArrayList(filteredEvents))
+                    startActivity(intent)
+                */
+                }
+
+            })
+
 
             // notify adapter about data changes
             eventsAdapter.notifyDataSetChanged()
@@ -212,4 +229,5 @@ open class Discovery : AppCompatActivity(), CategoryAdapter.OnItemClickListener 
         }
         return super.onOptionsItemSelected(item)
     }
+
 }

@@ -4,9 +4,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.ipca_project.musenex.Discovery
 import com.ipca_project.musenex.DiscoveryCardView
 import com.ipca_project.musenex.R
 import com.squareup.picasso.Picasso
@@ -19,8 +21,19 @@ class EventsAdapter(
     // as course list and context
     private val courseList: ArrayList<DiscoveryEventsModal>,
     private val museumList: ArrayList<DiscoveryCardView>,
-    private val context: Context
+    private val context: Context,
 ) : RecyclerView.Adapter<EventsAdapter.EventsViewHolder>() {
+
+    private lateinit var mlistener: onItemClickListener
+    interface onItemClickListener{
+        fun onItemClick(position: Int)
+
+    }
+
+    fun setOnClickListener(listener: onItemClickListener){
+        mlistener = listener
+    }
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -34,15 +47,13 @@ class EventsAdapter(
         )
         // at last we are returning our view holder
         // class with our item View File.
-        return EventsViewHolder(itemView)
+        return EventsViewHolder(itemView, mlistener)
     }
 
     override fun onBindViewHolder(holder: EventsAdapter.EventsViewHolder, position: Int) {
+
         // on below line we are setting data to our text view and our image view.
         holder.TextViewName.text = courseList.get(position).EventName
-
-
-
         for(searchMuseum in museumList){
             if (searchMuseum.MuseumId == courseList.get(position).EventLoc) {
                 holder.TextViewLoc.text = searchMuseum.MuseumName
@@ -61,12 +72,19 @@ class EventsAdapter(
         return courseList.size
     }
 
-    class EventsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class EventsViewHolder(itemView: View, listener: onItemClickListener) : RecyclerView.ViewHolder(itemView) {
         // on below line we are initializing our course name text view and our image view.
         val TextViewName: TextView = itemView.findViewById(R.id.textView1Name)
         val TextViewLoc: TextView = itemView.findViewById(R.id.textViewLoc)
         val TextViewDateBeg: TextView = itemView.findViewById(R.id.textViewDate)
         val TextViewDateEnd: TextView = itemView.findViewById(R.id.textViewDateEnd)
         val ImageEvent: ImageView = itemView.findViewById(R.id.imageViewEvent)
+
+        init {
+            itemView.setOnClickListener{
+                listener.onItemClick(adapterPosition)
+            }
+        }
+
     }
 }
