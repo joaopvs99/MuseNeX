@@ -9,8 +9,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -21,6 +19,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:targetApi="34">
+        <activity
+            android:name=".BookingActivity"
+            android:exported="false">
+        </activity>
         <activity
             android:name=".PiecePageActivity"
             android:exported="false" />

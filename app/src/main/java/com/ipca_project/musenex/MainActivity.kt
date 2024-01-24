@@ -43,6 +43,5 @@ class MainActivity : AppCompatActivity() {
         viewModel.fetchDiscovery()
 
     }
-
     var viewModel = DiscoveryViewModel()
 }

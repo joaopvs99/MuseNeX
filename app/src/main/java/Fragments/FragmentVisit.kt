@@ -3,24 +3,14 @@ import android.graphics.Rect
 import org.osmdroid.config.Configuration
 import android.location.Geocoder
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import android.widget.Toast.LENGTH_SHORT
 import androidx.fragment.app.Fragment
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.maps.model.CameraPosition
-import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
-import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 import com.ipca_project.musenex.R
 import model.Museum
-import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.views.MapView
 import java.io.IOException
 import org.osmdroid.views.overlay.Marker
@@ -38,7 +28,7 @@ class FragmentVisit : Fragment() {
         val view = inflater.inflate(R.layout.visit_recycler_view, container, false)
         museum = arguments?.getSerializable("museum") as Museum
 
-        // Inicializa o SupportMapFragment
+        // Initialize SupportMapFragment
         Configuration.getInstance().load(context, androidx.preference.PreferenceManager.getDefaultSharedPreferences(context))
 
 
