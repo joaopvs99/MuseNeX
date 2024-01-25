@@ -4,25 +4,24 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.ipca_project.musenex.Discovery
-import com.ipca_project.musenex.DiscoveryCardView
 import com.ipca_project.musenex.R
 import com.squareup.picasso.Picasso
+import model.Event
+import model.Museum
 import java.text.SimpleDateFormat
 
 // on below line we are creating
 // a course rv adapter class.
-class EventsAdapter(
+class DiscoverEventsAdapter(
     // on below line we are passing variables
     // as course list and context
-    private val courseList: ArrayList<DiscoveryEventsModal>,
-    private val museumList: ArrayList<DiscoveryCardView>,
+    private val courseList: ArrayList<Event>,
+    private val museumList: ArrayList<Museum>,
     private val context: Context,
-) : RecyclerView.Adapter<EventsAdapter.EventsViewHolder>() {
+) : RecyclerView.Adapter<DiscoverEventsAdapter.EventsViewHolder>() {
 
     private lateinit var mlistener: onItemClickListener
     interface onItemClickListener{
@@ -37,10 +36,8 @@ class EventsAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): EventsAdapter.EventsViewHolder {
-        // this method is use to inflate the layout file
-        // which we have created for our recycler view.
-        // on below line we are inflating our layout file.
+    ): DiscoverEventsAdapter.EventsViewHolder {
+
         val itemView = LayoutInflater.from(parent.context).inflate(
             R.layout.event_discover_recycler_view,
             parent, false
@@ -50,19 +47,19 @@ class EventsAdapter(
         return EventsViewHolder(itemView, mlistener)
     }
 
-    override fun onBindViewHolder(holder: EventsAdapter.EventsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: DiscoverEventsAdapter.EventsViewHolder, position: Int) {
 
         // on below line we are setting data to our text view and our image view.
-        holder.TextViewName.text = courseList.get(position).EventName
+        holder.TextViewName.text = courseList.get(position).name
         for(searchMuseum in museumList){
-            if (searchMuseum.MuseumId == courseList.get(position).EventLoc) {
-                holder.TextViewLoc.text = searchMuseum.MuseumName
+            if (searchMuseum.museumId == courseList.get(position).museumId) {
+                holder.TextViewLoc.text = searchMuseum.name
             }
         }
 
-        holder.TextViewDateBeg.text = SimpleDateFormat("dd/MM/yyyy").format(courseList.get(position).EventDateBeg)
-        holder.TextViewDateEnd.text = SimpleDateFormat("dd/MM/yyyy").format(courseList.get(position).EventDateEnd)
-        val galleryItem = courseList.get(position).EventImg
+        holder.TextViewDateBeg.text = SimpleDateFormat("dd/MM/yyyy").format(courseList.get(position).date_event_beg)
+        holder.TextViewDateEnd.text = SimpleDateFormat("dd/MM/yyyy").format(courseList.get(position).date_event_end)
+        val galleryItem = courseList.get(position).galeryEvent
         Picasso.get().load(galleryItem[0]).resize(1920, 1080).centerInside().into(holder.ImageEvent)
     }
 

@@ -2,17 +2,13 @@ package com.ipca_project.musenex
 
 import adapters.AdapterDiscovery
 import android.content.Context
-import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -21,9 +17,10 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 import com.gtappdevelopers.kotlingfgproject.CategoryAdapter
-import com.gtappdevelopers.kotlingfgproject.DiscoveryEventsModal
-import com.gtappdevelopers.kotlingfgproject.EventsAdapter
+import com.gtappdevelopers.kotlingfgproject.DiscoverEventsAdapter
+import model.Category
 import model.Event
+import model.Museum
 import viewModels.DiscoveryViewModel
 
 open class Discovery : AppCompatActivity(), CategoryAdapter.OnItemClickListener {
@@ -33,15 +30,15 @@ open class Discovery : AppCompatActivity(), CategoryAdapter.OnItemClickListener 
     private lateinit var EventsCard: RecyclerView
     private lateinit var CategoryCard: RecyclerView
     private lateinit var museumAdapter: AdapterDiscovery
-    private lateinit var eventsAdapter: EventsAdapter
+    private lateinit var eventsAdapter: DiscoverEventsAdapter
     private lateinit var categoryAdapter: CategoryAdapter
     private lateinit var linearForSearch : LinearLayout
     private var clickedPosition: Int = 0
 
     // Lists
-    private lateinit var MuseumList: ArrayList<DiscoveryCardView>
-    private lateinit var EventList: ArrayList<DiscoveryEventsModal>
-    private lateinit var CategoryList: ArrayList<DiscoveryCategoryView>
+    private lateinit var MuseumList: ArrayList<Museum>
+    private lateinit var EventList: ArrayList<Event>
+    private lateinit var CategoryList: ArrayList<Category>
 
     // connect data base
     var viewModel = DiscoveryViewModel()
@@ -64,7 +61,11 @@ open class Discovery : AppCompatActivity(), CategoryAdapter.OnItemClickListener 
         viewModel.categories.observe(this, Observer { categories ->
             CategoryList = ArrayList()
             for (searchCategory in categories){
-                CategoryList.add(DiscoveryCategoryView(searchCategory.name))
+                CategoryList.add(Category(
+                    categoryId = searchCategory.categoryId,
+                    name = searchCategory.name
+                    )
+                )
             }
 
             val mLayoutManager = LinearLayoutManager(applicationContext)
@@ -85,12 +86,17 @@ open class Discovery : AppCompatActivity(), CategoryAdapter.OnItemClickListener 
         viewModel.events.observe(this, Observer { events ->
             EventList = ArrayList()
             for (searchEvent in events){
-                EventList.add(DiscoveryEventsModal(
-                    EventName = searchEvent.name,
-                    EventDateBeg = searchEvent.date_event_beg,
-                    EventDateEnd = searchEvent.date_event_end,
-                    EventLoc = searchEvent.museumId,
-                    EventImg = searchEvent.galeryEvent)
+                EventList.add(
+                    Event(
+                    eventId = searchEvent.eventId,
+                    name = searchEvent.name,
+                    date_event_beg = searchEvent.date_event_beg,
+                    date_event_end = searchEvent.date_event_end,
+                    description = searchEvent.description,
+                    museumId = searchEvent.museumId,
+                    galeryEvent = searchEvent.galeryEvent,
+                    categoryId = searchEvent.categoryId
+                    )
                 )
 
             }
@@ -102,13 +108,13 @@ open class Discovery : AppCompatActivity(), CategoryAdapter.OnItemClickListener 
             snapHelper.attachToRecyclerView(EventsCard)
 
             // start adapter
-            eventsAdapter = EventsAdapter(EventList, MuseumList,this)
+            eventsAdapter = DiscoverEventsAdapter(EventList, MuseumList,this)
 
             // turn adapter to recycleView
             EventsCard.adapter = eventsAdapter
-            eventsAdapter.setOnClickListener(object : EventsAdapter.onItemClickListener{
+            eventsAdapter.setOnClickListener(object : DiscoverEventsAdapter.onItemClickListener{
                 override fun onItemClick(position: Int) {
-
+                    Toast.makeText(this@Discovery, "ola $position", Toast.LENGTH_SHORT).show()
                     /*
                     //send data
                     val intent = Intent(this@Discovery,MuseumPageActivity::class.java)
@@ -130,10 +136,16 @@ open class Discovery : AppCompatActivity(), CategoryAdapter.OnItemClickListener 
         viewModel.museums.observe(this, Observer { museums ->
             MuseumList = ArrayList()
             for (searchMuseum in museums){
-                MuseumList.add(DiscoveryCardView(
-                    MuseumId = searchMuseum.museumId,
-                    MuseumName = searchMuseum.name,
-                    MuseumImg = searchMuseum.galery))
+                MuseumList.add(Museum(
+                    museumId = searchMuseum.museumId,
+                    name = searchMuseum.name,
+                    location = searchMuseum.location,
+                    description = searchMuseum.description,
+                    contact = searchMuseum.contact,
+                    categoryId = searchMuseum.categoryId,
+                    galery = searchMuseum.galery
+                    )
+                )
             }
 
             // Define gridLayout
@@ -155,27 +167,28 @@ open class Discovery : AppCompatActivity(), CategoryAdapter.OnItemClickListener 
     override fun OnItemClick(position: Int) {
         clickedPosition = position
 
-        
-
         val sharedPreference = getSharedPreferences("PreferencesForTable", Context.MODE_PRIVATE)
         var editor = sharedPreference.edit()
         editor.putInt("positionClicked", position)
         editor.apply()
 
-        // Vertical Cards Building (Museums)
         viewModel.museums.observe(this, Observer { museums ->
             MuseumList = ArrayList()
             for (searchMuseum in museums){
 
-                Toast.makeText(this, searchMuseum.categoryName, Toast.LENGTH_SHORT).show()
-                Toast.makeText(this, CategoryList[position].name, Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, searchMuseum.categoryName, Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, CategoryList[position].name, Toast.LENGTH_SHORT).show()
 
                 if (searchMuseum.categoryName == CategoryList[position].name) {
                     MuseumList.add(
-                        DiscoveryCardView(
-                            MuseumId = searchMuseum.museumId,
-                            MuseumName = searchMuseum.name,
-                            MuseumImg = searchMuseum.galery
+                        Museum(
+                            museumId = searchMuseum.museumId,
+                            name = searchMuseum.name,
+                            location = searchMuseum.location,
+                            description = searchMuseum.description,
+                            contact = searchMuseum.contact,
+                            categoryId = searchMuseum.categoryId,
+                            galery = searchMuseum.galery
                         )
                     )
                 }
@@ -186,6 +199,7 @@ open class Discovery : AppCompatActivity(), CategoryAdapter.OnItemClickListener 
 
             // turn adapter to recycleView
             MuseumCard.adapter = museumAdapter
+
             museumAdapter.notifyDataSetChanged()
         })
 
@@ -193,16 +207,21 @@ open class Discovery : AppCompatActivity(), CategoryAdapter.OnItemClickListener 
             EventList = ArrayList()
             for (searchEvent in events){
                 if (searchEvent.categoryName == CategoryList[position].name){
-                    EventList.add(DiscoveryEventsModal(
-                        EventName = searchEvent.name,
-                        EventDateBeg = searchEvent.date_event_beg,
-                        EventDateEnd = searchEvent.date_event_end,
-                        EventLoc = searchEvent.museumId,
-                        EventImg = searchEvent.galeryEvent))
+                    EventList.add(Event(
+                        eventId = searchEvent.eventId,
+                        name = searchEvent.name,
+                        date_event_beg = searchEvent.date_event_beg,
+                        date_event_end = searchEvent.date_event_end,
+                        description = searchEvent.description,
+                        museumId = searchEvent.museumId,
+                        galeryEvent = searchEvent.galeryEvent,
+                        categoryId = searchEvent.categoryId
+                        )
+                    )
                 }
             }
             // start adapter
-            eventsAdapter = EventsAdapter(EventList, MuseumList,this)
+            eventsAdapter = DiscoverEventsAdapter(EventList, MuseumList,this)
 
             // turn adapter to recycleView
             EventsCard.adapter = eventsAdapter

@@ -7,14 +7,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.ipca_project.musenex.DiscoveryCardView
 import com.ipca_project.musenex.R
 import com.squareup.picasso.Picasso
+import model.Museum
 
 class AdapterDiscovery(
 
     // variables
-    private val museumList: ArrayList<DiscoveryCardView>,
+    private val museumList: ArrayList<Museum>,
     private val context: Context
 ) : RecyclerView.Adapter<AdapterDiscovery.MuseumViewHolder>() {
 
@@ -35,8 +35,8 @@ class AdapterDiscovery(
 
     // put data on textView
     override fun onBindViewHolder(holder: MuseumViewHolder, position: Int) {
-        holder.cardTextView.text = museumList.get(position).MuseumName
-        val galleryItem = museumList.get(position).MuseumImg
+        holder.cardTextView.text = museumList.get(position).name
+        val galleryItem = museumList.get(position).galery
         Picasso.get().load(galleryItem[0]).resize(1920, 1080).centerInside().into(holder.cardImageView)
     }
 
