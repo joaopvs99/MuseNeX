@@ -41,15 +41,12 @@ class EventsAdapter(
         parent: ViewGroup,
         viewType: Int
     ): EventsAdapter.EventsViewHolder {
-        // this method is use to inflate the layout file
-        // which we have created for our recycler view.
-        // on below line we are inflating our layout file.
+        
         val itemView = LayoutInflater.from(parent.context).inflate(
             R.layout.event_discover_recycler_view,
             parent, false
         )
-        // at last we are returning our view holder
-        // class with our item View File.
+
         return EventsViewHolder(itemView)
     }
 

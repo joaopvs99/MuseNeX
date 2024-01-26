@@ -2,28 +2,8 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-<<<<<<< HEAD
-      <entry key="All Tests">
-=======
-      <entry key="BookingActivity">
->>>>>>> origin/main
-        <State />
-      </entry>
       <entry key="app">
-        <State>
-          <targetSelectedWithDropDown>
-            <Target>
-              <type value="QUICK_BOOT_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\Ruisi\.android\avd\Pixel_6a_API_TiramisuPrivacySandbox_1.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-01-12T21:04:09.375174600Z" />
-        </State>
+        <State />
       </entry>
     </value>
   </component>
