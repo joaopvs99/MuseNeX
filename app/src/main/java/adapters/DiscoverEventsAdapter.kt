@@ -53,6 +53,7 @@ class EventsAdapter(
     inner class EventsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
         // on below line we are initializing our course name text view and our image view.
+            
         val TextViewName: TextView = itemView.findViewById(R.id.textView1Name)
         val TextViewLoc: TextView = itemView.findViewById(R.id.textViewLoc)
         val TextViewDateBeg: TextView = itemView.findViewById(R.id.textViewDate)
