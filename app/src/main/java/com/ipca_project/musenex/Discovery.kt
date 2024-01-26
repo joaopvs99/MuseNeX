@@ -7,7 +7,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
@@ -17,7 +16,7 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 import com.gtappdevelopers.kotlingfgproject.CategoryAdapter
-import com.gtappdevelopers.kotlingfgproject.DiscoverEventsAdapter
+import com.gtappdevelopers.kotlingfgproject.EventsAdapter
 import model.Category
 import model.Event
 import model.Museum
@@ -30,7 +29,7 @@ open class Discovery : AppCompatActivity(), CategoryAdapter.OnItemClickListener 
     private lateinit var EventsCard: RecyclerView
     private lateinit var CategoryCard: RecyclerView
     private lateinit var museumAdapter: AdapterDiscovery
-    private lateinit var eventsAdapter: DiscoverEventsAdapter
+    private lateinit var eventsAdapter: EventsAdapter
     private lateinit var categoryAdapter: CategoryAdapter
     private lateinit var linearForSearch : LinearLayout
     private var clickedPosition: Int = 0
@@ -108,11 +107,11 @@ open class Discovery : AppCompatActivity(), CategoryAdapter.OnItemClickListener 
             snapHelper.attachToRecyclerView(EventsCard)
 
             // start adapter
-            eventsAdapter = DiscoverEventsAdapter(EventList, MuseumList,this)
+            eventsAdapter = EventsAdapter(EventList, MuseumList,this, this)
 
             // turn adapter to recycleView
             EventsCard.adapter = eventsAdapter
-            eventsAdapter.setOnClickListener(object : DiscoverEventsAdapter.onItemClickListener{
+            /*eventsAdapter.setOnClickListener(object : DiscoverEventsAdapter.onItemClickListener{
                 override fun onItemClick(position: Int) {
                     Toast.makeText(this@Discovery, "ola $position", Toast.LENGTH_SHORT).show()
                     /*
@@ -125,7 +124,7 @@ open class Discovery : AppCompatActivity(), CategoryAdapter.OnItemClickListener 
                 */
                 }
 
-            })
+            })*/
 
 
             // notify adapter about data changes
@@ -221,7 +220,7 @@ open class Discovery : AppCompatActivity(), CategoryAdapter.OnItemClickListener 
                 }
             }
             // start adapter
-            eventsAdapter = DiscoverEventsAdapter(EventList, MuseumList,this)
+            eventsAdapter = EventsAdapter(EventList, MuseumList,this, this)
 
             // turn adapter to recycleView
             EventsCard.adapter = eventsAdapter

@@ -1,3 +1,4 @@
+
 package com.ipca_project.musenex
 
 import android.os.Bundle
@@ -5,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.gtappdevelopers.kotlingfgproject.DiscoverEventsAdapter
+import com.gtappdevelopers.kotlingfgproject.EventsAdapter
 import model.Event
 import model.Museum
 import viewModels.DiscoveryViewModel
@@ -14,12 +15,12 @@ import viewModels.DiscoveryViewModel
 
 class testedelayouts : AppCompatActivity() {
 
-    var teste : Int = 1
+    var teste : Int = 0
 
     private lateinit var EventsSeeAllCard: RecyclerView
 
     //Adapters
-    private lateinit var eventsAdapter: DiscoverEventsAdapter
+    private lateinit var eventsAdapter: EventsAdapter
 
 
     //lists
@@ -71,7 +72,7 @@ class testedelayouts : AppCompatActivity() {
                     EventsSeeAllCard.layoutManager = layoutManager
 
                     // start adapter
-                    eventsAdapter = DiscoverEventsAdapter(EventList, MuseumList,this)
+                    //eventsAdapter = EventsAdapter(EventList, MuseumList,this, )
 
                     // turn adapter to recycleView
                     EventsSeeAllCard.adapter = eventsAdapter

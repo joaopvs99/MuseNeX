@@ -33,6 +33,11 @@ class AdapterDiscovery(
         return MuseumViewHolder(itemView)
     }
 
+    class MuseumViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val cardTextView: TextView = itemView.findViewById(R.id.textViewCard)
+        val cardImageView: ImageView = itemView.findViewById(R.id.imageViewMuseum)
+    }
+
     // put data on textView
     override fun onBindViewHolder(holder: MuseumViewHolder, position: Int) {
         holder.cardTextView.text = museumList.get(position).name
@@ -43,11 +48,5 @@ class AdapterDiscovery(
     // return list size
     override fun getItemCount(): Int {
         return museumList.size
-    }
-
-    // start TextView
-    class MuseumViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val cardTextView: TextView = itemView.findViewById(R.id.textViewCard)
-        val cardImageView: ImageView = itemView.findViewById(R.id.imageViewMuseum)
     }
 }
