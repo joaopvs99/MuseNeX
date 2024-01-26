@@ -1,6 +1,7 @@
 <resources>
     //atributos Museu
     <string name="app_name">MuseNex</string>
+<<<<<<< HEAD
     <string name="who_we_are">Quem Somos Nós</string>
     <string name="who_we_are_text">Texto apresentação sobre nós</string>
     <string name="objective">O Nosso Objetivo</string>
@@ -18,6 +19,18 @@
     <string name="seeAll">See All</string>
     <string name="events">Events</string>
     <string name="pieces">Pieces of Art</string>
+=======
+    <string name="museum_name">Nome</string>
+    <string name="museum_location">Endereço</string>
+    <string name="museum_description">Descrição</string>
+    <string name="museum_contact">Contactos</string>
+    <string name="museum_galery">Galeria</string>
+    <string name="museum_colection">Coleção</string>
+    <string name="museum_visit">Visitar</string>
+    <string name="seeAll">Ver Tudo</string>
+    <string name="events">Eventos</string>
+    <string name="pieces">Peças de Arte</string>
+>>>>>>> origin/main
     <string name="horario">Horario de funcionamento</string>
     <string name="horarios">    domingo     10:00-17:30\n\n
                                 segunda     10:00-17:30\n\n
@@ -27,13 +40,15 @@
                                 sexta       10:00-17:30\n\n
                                 sábado      10:00-20:00\n\n</string>
     <string name="button_3d">3D</string>
-    <string name="ranking">See All</string>
+    <string name="ranking">Ranking</string>
     <string name="idioma">Idioma</string>
     <string name="ex_text">Expandable Text</string>
-    <string name="showPlayer">Listen Audio</string>
+    <string name="showPlayer">Audio</string>
     <string name="idiomaPt">PT</string>
     <string name="idiomaEng">ENG</string>
     <string name="text">Text</string>
+    <string name="info">Informação Geral</string>
+    <string name="book">Reservar</string>
 
 >>>>>>> origin/main
 </resources>

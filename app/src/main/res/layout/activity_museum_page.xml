@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:text="@string/button_3d"
         android:textColor="@color/logoColor"
-        android:textSize="24dp"
+        android:textSize="24sp"
         android:layout_gravity="end"
         android:layout_marginEnd="16dp"
         android:background="@drawable/rounded_corners"
@@ -66,7 +66,7 @@
                 android:text="@string/ex_text"
                 android:textSize="14sp"
                 android:textStyle="normal"
-                app:ellipsizeTextColor="#050505"
+                app:ellipsizeTextColor="@color/black"
                 app:expandType="layout"
                 app:fontFamily="sans-serif-light"
                 app:isUnderlined="true"
@@ -113,7 +113,8 @@
                     android:textColor="@color/lightGrey"
                     android:textSize="16sp"
                     android:textStyle="bold"
-                    app:cornerRadius="0dp"></Button>
+                    app:cornerRadius="0dp">
+                </Button>
             </LinearLayout>
 
             <FrameLayout
@@ -122,7 +123,8 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="end"
                 android:layout_weight="1"
-                android:minHeight="200dp"></FrameLayout>
+                android:minHeight="200dp">
+            </FrameLayout>
         </LinearLayout>
     </ScrollView>
 

@@ -50,8 +50,6 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
     // Add the dependency for the Firebase SDK for Google Analytics
     implementation("com.google.firebase:firebase-analytics")
-    // Declare the dependency for the Cloud Firestore library
-    // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-auth")
     //Imports for discovery
@@ -66,5 +64,5 @@ dependencies {
     implementation ("androidx.preference:preference-ktx:1.1.1")
     implementation ("com.google.android.exoplayer:exoplayer:2.18.0")
     implementation ("com.google.android.exoplayer:exoplayer-ui:2.18.0")
-
+    implementation ("com.braintreepayments:card-form:5.4.0")
 }
