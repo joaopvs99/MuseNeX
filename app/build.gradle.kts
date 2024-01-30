@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "com.ipca_project.musenex"
-    compileSdk = 34
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "com.ipca_project.musenex"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
@@ -56,6 +56,10 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-auth")
+    //Imports for discovery
+    implementation ("me.relex:circleindicator:2.1.6")
+    implementation ("androidx.viewpager2:viewpager2:1.0.0")
+    implementation("androidx.gridlayout:gridlayout:1.0.0")
     implementation("com.squareup.picasso:picasso:2.8")
     implementation("io.github.glailton.expandabletextview:expandabletextview:1.0.4")
     implementation("androidx.cardview:cardview:1.0.0")

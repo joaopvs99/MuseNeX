@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.gtappdevelopers.kotlingfgproject.CategoryAdapter
 import com.gtappdevelopers.kotlingfgproject.EventsAdapter
 import model.Event
 import model.Museum
@@ -22,8 +21,6 @@ class testedelayouts : AppCompatActivity() {
 
     //Adapters
     private lateinit var eventsAdapter: EventsAdapter
-
-
 
     //lists
     private lateinit var EventList: ArrayList<Event>

@@ -20,6 +20,10 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:targetApi="34">
         <activity
+            android:name=".testedelayouts"
+            android:exported="false">
+        </activity>
+        <activity
             android:name=".BookingActivity"
             android:exported="false">
         </activity>
@@ -38,20 +42,26 @@
             android:name=".MuseumPageActivity"
             android:exported="false"
             android:parentActivityName=".MainActivity">
-
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.ipca_project.musenex.MainActivity" />
         </activity>
         <activity
-            android:name=".MainActivity"
+        android:name=".MainActivity"
+        android:exported="false">
+    </activity>
+        <activity
+            android:name=".Onboarding2"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".Discovery"
+            android:exported="false">
         </activity>
     </application>
 </manifest>

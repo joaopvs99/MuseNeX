@@ -9,15 +9,18 @@ import model.Event
 import model.Museum
 import viewModels.DiscoveryViewModel
 
+// kinda inutil esta main mas n sei se vai ser usada por isso...
+
+
 class MainActivity : AppCompatActivity() {
     //Declaração de variáveis
     var museums: ArrayList<Museum> = arrayListOf()
     var events: ArrayList<Event> = arrayListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        //View Model Museus
+        setContentView(R.layout.onboarding1)
+
         viewModel.museums.observe(this, Observer { museums ->
             if (events.isNotEmpty()) {
                 val intent = Intent(this,MuseumPageActivity::class.java)
@@ -41,7 +44,6 @@ class MainActivity : AppCompatActivity() {
             this.events = events
         })
         viewModel.fetchDiscovery()
-
     }
     var viewModel = DiscoveryViewModel()
 }
