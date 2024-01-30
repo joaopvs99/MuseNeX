@@ -22,7 +22,6 @@ class testedelayouts : AppCompatActivity() {
     //Adapters
     private lateinit var eventsAdapter: EventsAdapter
 
-
     //lists
     private lateinit var EventList: ArrayList<Event>
     private lateinit var MuseumList: ArrayList<Museum>
@@ -71,8 +70,8 @@ class testedelayouts : AppCompatActivity() {
                     val layoutManager = GridLayoutManager(this, 2)
                     EventsSeeAllCard.layoutManager = layoutManager
 
-                    // start adapter
-                    //eventsAdapter = EventsAdapter(EventList, MuseumList,this, )
+                    //start adapter
+                    //eventsAdapter = EventsAdapter(EventList, MuseumList,this,this)
 
                     // turn adapter to recycleView
                     EventsSeeAllCard.adapter = eventsAdapter

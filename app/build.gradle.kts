@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
+    id("androidx.navigation.safeargs")
 }
 
 android {
@@ -34,6 +35,9 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures{
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -65,4 +69,6 @@ dependencies {
     implementation ("com.google.android.exoplayer:exoplayer:2.18.0")
     implementation ("com.google.android.exoplayer:exoplayer-ui:2.18.0")
     implementation ("com.braintreepayments:card-form:5.4.0")
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.5.0")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.5.0")
 }
