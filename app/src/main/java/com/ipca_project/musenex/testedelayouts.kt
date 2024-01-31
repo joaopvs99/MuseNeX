@@ -1,21 +1,24 @@
 
 package com.ipca_project.musenex
 
+import adapters.AdapterDiscovery
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.gtappdevelopers.kotlingfgproject.CategoryAdapter
 import com.gtappdevelopers.kotlingfgproject.EventsAdapter
 import model.Event
 import model.Museum
 import viewModels.DiscoveryViewModel
 
-// testar layouts em construção ainda sem classe criada...
+class testedelayouts : AppCompatActivity(),
+    CategoryAdapter.OnItemClickListener,
+    EventsAdapter.OnItemClickListener,
+    AdapterDiscovery.OnItemClickListener {
 
-class testedelayouts : AppCompatActivity() {
-
-    var teste : Int = 0
+    var teste : Int = 1
 
     private lateinit var EventsSeeAllCard: RecyclerView
 
@@ -50,6 +53,22 @@ class testedelayouts : AppCompatActivity() {
             0 -> {
                 getSupportActionBar()?.setTitle("Todos os Eventos")
 
+                viewModel.museums.observe(this, Observer { museums ->
+                    MuseumList = ArrayList()
+                    for (searchMuseum in museums){
+                        MuseumList.add(Museum(
+                            museumId = searchMuseum.museumId,
+                            name = searchMuseum.name,
+                            location = searchMuseum.location,
+                            description = searchMuseum.description,
+                            contact = searchMuseum.contact,
+                            categoryId = searchMuseum.categoryId,
+                            galery = searchMuseum.galery
+                        )
+                        )
+                    }
+                })
+
                 viewModel.events.observe(this, Observer { events ->
                     EventList = ArrayList()
                     for (searchEvent in events){
@@ -68,11 +87,11 @@ class testedelayouts : AppCompatActivity() {
 
                     }
 
-                    val layoutManager = GridLayoutManager(this, 2)
+                    val layoutManager = GridLayoutManager(this, 1)
                     EventsSeeAllCard.layoutManager = layoutManager
 
                     // start adapter
-                    //eventsAdapter = EventsAdapter(EventList, MuseumList,this, )
+                    eventsAdapter = EventsAdapter(EventList, MuseumList,this, this, 0)
 
                     // turn adapter to recycleView
                     EventsSeeAllCard.adapter = eventsAdapter
@@ -80,45 +99,22 @@ class testedelayouts : AppCompatActivity() {
                     eventsAdapter.notifyDataSetChanged()
                     }
                 )
+
             }
 
             1 -> { getSupportActionBar()?.setTitle("Todas as Obras")}
         }
+    }
 
+    override fun onItemClick(position: Int) {
 
+    }
 
+    override fun onItemClickMuseum(position: Int) {
 
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    override fun onItemClickEvents(position: Int) {
+        TODO("Not yet implemented")
     }
 }

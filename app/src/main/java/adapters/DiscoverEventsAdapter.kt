@@ -23,7 +23,8 @@ class EventsAdapter(
     private val courseList: ArrayList<Event>,
     private val museumList: ArrayList<Museum>,
     private val context: Context,
-    private val listener: CategoryAdapter.OnItemClickListener
+    private val listener: OnItemClickListener,
+    private val type: Int
 ) : RecyclerView.Adapter<EventsAdapter.EventsViewHolder>() {
 
     //private lateinit var mlistener: onItemClickListener
@@ -41,11 +42,17 @@ class EventsAdapter(
         parent: ViewGroup,
         viewType: Int
     ): EventsAdapter.EventsViewHolder {
-        
-        val itemView = LayoutInflater.from(parent.context).inflate(
+
+        var itemView = LayoutInflater.from(parent.context).inflate(
             R.layout.event_discover_recycler_view,
             parent, false
         )
+        if (type == 0){
+            itemView = LayoutInflater.from(parent.context).inflate(
+            R.layout.see_all_recycler_view,
+            parent, false
+        )
+        }
 
         return EventsViewHolder(itemView)
     }
@@ -68,7 +75,7 @@ class EventsAdapter(
             val position = adapterPosition
 
             if (position != RecyclerView.NO_POSITION) {
-                listener.OnItemClick(position)
+                listener.onItemClickEvents(position)
                 val intent = Intent(context, MuseumPageActivity::class.java)
                 intent.putExtra("Museu",museumList[position])
                 val filteredEvents: List<Event> = courseList.filter { it.museumId == museumList[position].museumId }
@@ -99,4 +106,9 @@ class EventsAdapter(
         // returning our size of our list
         return courseList.size
     }
+
+    interface OnItemClickListener {
+        fun onItemClickEvents(position: Int)
+    }
+
 }
