@@ -21,6 +21,7 @@ import androidx.core.content.ContextCompat
 import model.Event
 import model.Museum
 import model.Piece
+import viewModels.AnalyticsViewModel
 import viewModels.MuseumViewModel
 
 class MuseumPageActivity : AppCompatActivity() {
@@ -37,6 +38,9 @@ class MuseumPageActivity : AppCompatActivity() {
 
         val museum = intent.getSerializableExtra("Museu") as Museum
         val event = intent.getSerializableExtra("Events") as ArrayList<Event>
+
+        val analyticsViewModel = AnalyticsViewModel()
+        analyticsViewModel.sendEvent("ScreenMuseum", museum.name)
 
         //appBar
         setSupportActionBar(findViewById(R.id.my_toolbar))
