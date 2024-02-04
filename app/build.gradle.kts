@@ -65,4 +65,5 @@ dependencies {
     implementation ("com.google.android.exoplayer:exoplayer:2.18.0")
     implementation ("com.google.android.exoplayer:exoplayer-ui:2.18.0")
     implementation ("com.braintreepayments:card-form:5.4.0")
+    implementation ("com.github.Ferfalk:SimpleSearchView:0.2.1")
 }
