@@ -6,8 +6,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -22,12 +20,10 @@ import com.gtappdevelopers.kotlingfgproject.EventsAdapter
 import model.Category
 import model.Event
 import model.Museum
+import viewModels.AnalyticsViewModel
 import viewModels.DiscoveryViewModel
 
-open class Discovery : AppCompatActivity(),
-    CategoryAdapter.OnItemClickListener,
-    EventsAdapter.OnItemClickListener,
-    AdapterDiscovery.OnItemClickListener {
+open class Discovery : AppCompatActivity(), CategoryAdapter.OnItemClickListener {
 
     // Variables
     private lateinit var MuseumCard: RecyclerView
@@ -36,9 +32,7 @@ open class Discovery : AppCompatActivity(),
     private lateinit var museumAdapter: AdapterDiscovery
     private lateinit var eventsAdapter: EventsAdapter
     private lateinit var categoryAdapter: CategoryAdapter
-    private lateinit var linearForSearch: LinearLayout
-    private lateinit var searchViewButton: Button
-    private lateinit var searchText: EditText
+    private lateinit var linearForSearch : LinearLayout
     private var clickedPosition: Int = 0
 
     // Lists
@@ -53,100 +47,26 @@ open class Discovery : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.discovery_page)
 
+        val analyticsViewModel = AnalyticsViewModel()
+        analyticsViewModel.sendEvent("ScreenDiscovery", "")
+
         // start data base
         viewModel.fetchDiscovery()
-
-        //Lists
-        MuseumList = ArrayList()
-        EventList = ArrayList()
-        CategoryList = ArrayList()
 
         // start layout components
         EventsCard = findViewById(R.id.DiscoveryEventsList)
         MuseumCard = findViewById(R.id.recyclerViewDiscovery)
         CategoryCard = findViewById(R.id.DiscoveryCategoriesList)
         linearForSearch = findViewById(R.id.linearForSearch)
-        searchViewButton = findViewById(R.id.buttonSearch)
-        searchText = findViewById(R.id.searchView)
         setSupportActionBar(findViewById(R.id.toolBar))
-
-
-        searchViewButton.setOnClickListener() {
-            var search = searchText.text
-
-            viewModel.events.observe(this, Observer { events ->
-                EventList = ArrayList()
-                for (searchEvent in events) {
-                    if (searchEvent.name.lowercase().contains(search.toString().lowercase())) {
-                        EventList.add(
-                            Event(
-                                eventId = searchEvent.eventId,
-                                name = searchEvent.name,
-                                date_event_beg = searchEvent.date_event_beg,
-                                date_event_end = searchEvent.date_event_end,
-                                description = searchEvent.description,
-                                museumId = searchEvent.museumId,
-                                galeryEvent = searchEvent.galeryEvent,
-                                categoryId = searchEvent.categoryId
-                            )
-                        )
-                    }
-
-                }
-            })
-
-            viewModel.museums.observe(this, Observer { museums ->
-                MuseumList = ArrayList()
-                for (searchMuseum in museums) {
-                    if (searchMuseum.name.lowercase().contains(search.toString().lowercase())) {
-                        MuseumList.add(
-                            Museum(
-                                museumId = searchMuseum.museumId,
-                                name = searchMuseum.name,
-                                location = searchMuseum.location,
-                                description = searchMuseum.description,
-                                contact = searchMuseum.contact,
-                                categoryId = searchMuseum.categoryId,
-                                galery = searchMuseum.galery
-                            )
-                        )
-                    }
-                }
-            })
-
-            // start adapter
-            eventsAdapter = EventsAdapter(EventList, MuseumList, this, this, 1)
-
-            // turn adapter to recycleView
-            EventsCard.adapter = eventsAdapter
-
-            // notify adapter about data changes
-            eventsAdapter.notifyDataSetChanged()
-
-            // Define gridLayout
-            val layoutManager = GridLayoutManager(this, 2)
-            MuseumCard.layoutManager = layoutManager
-
-            // start adapter
-            museumAdapter = AdapterDiscovery(MuseumList, EventList, this, this)
-
-            // turn adapter to recycleView
-            MuseumCard.adapter = museumAdapter
-
-            // notify adapter about data changes
-            museumAdapter.notifyDataSetChanged()
-        }
-
 
         //Category Buttons
         viewModel.categories.observe(this, Observer { categories ->
-
-            CategoryList.add(Category("1000000", "Todas"))
-            for (searchCategory in categories) {
-                CategoryList.add(
-                    Category(
-                        categoryId = searchCategory.categoryId,
-                        name = searchCategory.name
+            CategoryList = ArrayList()
+            for (searchCategory in categories){
+                CategoryList.add(Category(
+                    categoryId = searchCategory.categoryId,
+                    name = searchCategory.name
                     )
                 )
             }
@@ -156,7 +76,7 @@ open class Discovery : AppCompatActivity(),
             CategoryCard.layoutManager = mLayoutManager
 
             // start adapter
-            categoryAdapter = CategoryAdapter(CategoryList, this, this)
+            categoryAdapter = CategoryAdapter(CategoryList,this, this)
 
             // turn adapter to recycleView
             CategoryCard.adapter = categoryAdapter
@@ -165,26 +85,132 @@ open class Discovery : AppCompatActivity(),
             categoryAdapter.notifyDataSetChanged()
         })
 
-        val mLayoutManager = LinearLayoutManager(applicationContext)
-        mLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        EventsCard.layoutManager = mLayoutManager
-        val snapHelper: SnapHelper = PagerSnapHelper()
-        snapHelper.attachToRecyclerView(EventsCard)
-
-        val sharedPreference = getSharedPreferences("PreferencesForTable", Context.MODE_PRIVATE)
-        var editor = sharedPreference.edit()
-        editor.putInt("positionClicked", 0)
-        editor.apply()
-
-        fetchAll()
-    }
-    fun fetchAll() {
         // Horizontal Cards building (Events)
         viewModel.events.observe(this, Observer { events ->
             EventList = ArrayList()
-            for (searchEvent in events) {
+            for (searchEvent in events){
                 EventList.add(
                     Event(
+                    eventId = searchEvent.eventId,
+                    name = searchEvent.name,
+                    date_event_beg = searchEvent.date_event_beg,
+                    date_event_end = searchEvent.date_event_end,
+                    description = searchEvent.description,
+                    museumId = searchEvent.museumId,
+                    galeryEvent = searchEvent.galeryEvent,
+                    categoryId = searchEvent.categoryId
+                    )
+                )
+
+            }
+
+            val mLayoutManager = LinearLayoutManager(applicationContext)
+            mLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+            EventsCard.layoutManager = mLayoutManager
+            val snapHelper: SnapHelper = PagerSnapHelper()
+            snapHelper.attachToRecyclerView(EventsCard)
+
+            // start adapter
+            eventsAdapter = EventsAdapter(EventList, MuseumList,this, this)
+
+            // turn adapter to recycleView
+            EventsCard.adapter = eventsAdapter
+            /*eventsAdapter.setOnClickListener(object : DiscoverEventsAdapter.onItemClickListener{
+                override fun onItemClick(position: Int) {
+                    Toast.makeText(this@Discovery, "ola $position", Toast.LENGTH_SHORT).show()
+                    /*
+                    //send data
+                    val intent = Intent(this@Discovery,MuseumPageActivity::class.java)
+                    intent.putExtra("Museu",MuseumList[1])
+                    val filteredEvents: List<Event> = events.filter { it.museumId == museums[1].museumId }
+                    intent.putExtra("Events", ArrayList(filteredEvents))
+                    startActivity(intent)
+                */
+                }
+
+            })*/
+
+
+            // notify adapter about data changes
+            eventsAdapter.notifyDataSetChanged()
+        })
+
+        // Vertical Cards Building (Museums)
+        viewModel.museums.observe(this, Observer { museums ->
+            MuseumList = ArrayList()
+            for (searchMuseum in museums){
+                MuseumList.add(Museum(
+                    museumId = searchMuseum.museumId,
+                    name = searchMuseum.name,
+                    location = searchMuseum.location,
+                    description = searchMuseum.description,
+                    contact = searchMuseum.contact,
+                    categoryId = searchMuseum.categoryId,
+                    galery = searchMuseum.galery
+                    )
+                )
+            }
+
+            // Define gridLayout
+            val layoutManager = GridLayoutManager(this, 2)
+            MuseumCard.layoutManager = layoutManager
+
+            // start adapter
+            museumAdapter = AdapterDiscovery(MuseumList, this)
+
+            // turn adapter to recycleView
+            MuseumCard.adapter = museumAdapter
+
+            // notify adapter about data changes
+            museumAdapter.notifyDataSetChanged()
+        })
+    }
+
+    // button function
+    override fun OnItemClick(position: Int) {
+        clickedPosition = position
+
+        val sharedPreference = getSharedPreferences("PreferencesForTable", Context.MODE_PRIVATE)
+        var editor = sharedPreference.edit()
+        editor.putInt("positionClicked", position)
+        editor.apply()
+
+        viewModel.museums.observe(this, Observer { museums ->
+            MuseumList = ArrayList()
+            for (searchMuseum in museums){
+
+                //Toast.makeText(this, searchMuseum.categoryName, Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, CategoryList[position].name, Toast.LENGTH_SHORT).show()
+
+                if (searchMuseum.categoryName == CategoryList[position].name) {
+                    MuseumList.add(
+                        Museum(
+                            museumId = searchMuseum.museumId,
+                            name = searchMuseum.name,
+                            location = searchMuseum.location,
+                            description = searchMuseum.description,
+                            contact = searchMuseum.contact,
+                            categoryId = searchMuseum.categoryId,
+                            galery = searchMuseum.galery
+                        )
+                    )
+                }
+            }
+
+            // start adapter
+            museumAdapter = AdapterDiscovery(MuseumList, this)
+
+            // turn adapter to recycleView
+            MuseumCard.adapter = museumAdapter
+
+            museumAdapter.notifyDataSetChanged()
+        })
+
+        viewModel.events.observe(this, Observer { events ->
+            EventList = ArrayList()
+            for (searchEvent in events){
+                if (searchEvent.categoryName == CategoryList[position].name){
+                    EventList.add(Event(
                         eventId = searchEvent.eventId,
                         name = searchEvent.name,
                         date_event_beg = searchEvent.date_event_beg,
@@ -193,127 +219,28 @@ open class Discovery : AppCompatActivity(),
                         museumId = searchEvent.museumId,
                         galeryEvent = searchEvent.galeryEvent,
                         categoryId = searchEvent.categoryId
+                        )
                     )
-                )
-
+                }
             }
+            // start adapter
+            eventsAdapter = EventsAdapter(EventList, MuseumList,this, this)
+
+            // turn adapter to recycleView
+            EventsCard.adapter = eventsAdapter
+            // notify adapter about data changes
+            eventsAdapter.notifyDataSetChanged()
         })
 
-        // Vertical Cards Building (Museums)
-        viewModel.museums.observe(this, Observer { museums ->
-            MuseumList = ArrayList()
-            for (searchMuseum in museums) {
-                MuseumList.add(
-                    Museum(
-                        museumId = searchMuseum.museumId,
-                        name = searchMuseum.name,
-                        location = searchMuseum.location,
-                        description = searchMuseum.description,
-                        contact = searchMuseum.contact,
-                        categoryId = searchMuseum.categoryId,
-                        galery = searchMuseum.galery
-                    )
-                )
-            }
-        })
-
-
-        // start adapter
-        eventsAdapter = EventsAdapter(EventList, MuseumList, this, this, 1)
-
-        // turn adapter to recycleView
-        EventsCard.adapter = eventsAdapter
-
-        // notify adapter about data changes
-        eventsAdapter.notifyDataSetChanged()
-
-        // Define gridLayout
-        val layoutManager = GridLayoutManager(this, 2)
-        MuseumCard.layoutManager = layoutManager
-
-        // start adapter
-        museumAdapter = AdapterDiscovery(MuseumList, EventList, this, this)
-
-        // turn adapter to recycleView
-        MuseumCard.adapter = museumAdapter
-
-        // notify adapter about data changes
-        museumAdapter.notifyDataSetChanged()
-
-    }
-    // button function
-    override fun onItemClick(position: Int) {
-        clickedPosition = position
-
-        val sharedPreference = getSharedPreferences("PreferencesForTable", Context.MODE_PRIVATE)
-        var editor = sharedPreference.edit()
-        editor.putInt("positionClicked", position)
-        editor.apply()
-        if (position != 0) {
-            viewModel.museums.observe(this, Observer { museums ->
-                MuseumList = ArrayList()
-                for (searchMuseum in museums) {
-                    if (searchMuseum.categoryName == CategoryList[position].name) {
-                        MuseumList.add(
-                            Museum(
-                                museumId = searchMuseum.museumId,
-                                name = searchMuseum.name,
-                                location = searchMuseum.location,
-                                description = searchMuseum.description,
-                                contact = searchMuseum.contact,
-                                categoryId = searchMuseum.categoryId,
-                                galery = searchMuseum.galery
-                            )
-                        )
-                    }
-                }
-
-                // start adapter
-                museumAdapter = AdapterDiscovery(MuseumList, EventList, this, this)
-
-                // turn adapter to recycleView
-                MuseumCard.adapter = museumAdapter
-
-                museumAdapter.notifyDataSetChanged()
-            })
-
-            viewModel.events.observe(this, Observer { events ->
-                EventList = ArrayList()
-                for (searchEvent in events) {
-                    if (searchEvent.categoryName == CategoryList[position].name) {
-                        EventList.add(
-                            Event(
-                                eventId = searchEvent.eventId,
-                                name = searchEvent.name,
-                                date_event_beg = searchEvent.date_event_beg,
-                                date_event_end = searchEvent.date_event_end,
-                                description = searchEvent.description,
-                                museumId = searchEvent.museumId,
-                                galeryEvent = searchEvent.galeryEvent,
-                                categoryId = searchEvent.categoryId
-                            )
-                        )
-                    }
-                }
-
-                // start adapter
-                eventsAdapter = EventsAdapter(EventList, MuseumList, this, this, 1)
-
-                // turn adapter to recycleView
-                EventsCard.adapter = eventsAdapter
-                // notify adapter about data changes
-                eventsAdapter.notifyDataSetChanged()
-            })
-        } else {
-            fetchAll()
-        }
         categoryAdapter.notifyDataSetChanged()
     }
+
     // menu inflate
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         return true
     }
+
     // Show search zone
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -324,9 +251,5 @@ open class Discovery : AppCompatActivity(),
         }
         return super.onOptionsItemSelected(item)
     }
-    override fun onItemClickMuseum(position: Int) {
 
-    }
-    override fun onItemClickEvents(position: Int) {
-    }
 }
