@@ -30,7 +30,7 @@ class FragmentCollections: Fragment() {
         val eventsRecyclerView: RecyclerView = view.findViewById(R.id.eventsList)
         val eventsLayoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         eventsRecyclerView.layoutManager = eventsLayoutManager
-        val eventsAdapter = EventAdapter(receivedData)
+        val eventsAdapter = EventAdapter(requireContext(), receivedData)
         eventsRecyclerView.adapter = eventsAdapter
         var snapHelper: SnapHelper = PagerSnapHelper()
         snapHelper.attachToRecyclerView(eventsRecyclerView)
