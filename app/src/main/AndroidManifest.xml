@@ -21,12 +21,7 @@
         tools:targetApi="34">
         <activity
             android:name=".SeeAllPage"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
+            android:exported="false">
         </activity>
         <activity
             android:name=".BookingActivity"
@@ -34,10 +29,15 @@
         </activity>
         <activity
             android:name=".PiecePageActivity"
-            android:exported="false">
-
+            android:exported="true">
+            <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data
+                android:scheme="musenex" />
+        </intent-filter>
         </activity>
-
         <activity
             android:name=".MuseumPageActivity"
             android:exported="false"
@@ -53,13 +53,15 @@
     </activity>
         <activity
             android:name=".Onboarding2"
-            android:exported="false">
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".Discovery"
             android:exported="false">
-
         </activity>
     </application>
-
 </manifest>
