@@ -44,6 +44,8 @@ class MuseumPageActivity : AppCompatActivity() {
 
         //appBar
         setSupportActionBar(findViewById(R.id.my_toolbar))
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
         getSupportActionBar()?.setTitle(museum.name)
 
@@ -121,6 +123,10 @@ class MuseumPageActivity : AppCompatActivity() {
                 .addToBackStack(null)
                 .commit()
         }
+    }
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 
     private fun setButtonSelected(button: Button) {
