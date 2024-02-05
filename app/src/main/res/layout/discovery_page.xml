@@ -45,10 +45,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@android:color/transparent"
-                        android:hint="Pesquisar o Museus, Eventos e Obras"
+                        android:hint="Pesquisar o Museus ou Eventos"
                         android:padding="8dp"
                         android:textStyle="bold"
                         />
+
+                    <Button
+                        android:id="@+id/buttonSearch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Pesquisar" />
 
                 </LinearLayout>
             </com.google.android.material.appbar.AppBarLayout>
@@ -125,5 +131,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="3.5"/>
             </LinearLayout>
+
+
         </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

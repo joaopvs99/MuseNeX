@@ -47,7 +47,7 @@ class CategoryAdapter (
             val position = adapterPosition
 
             if (position != RecyclerView.NO_POSITION) {
-                listener.OnItemClick(position)
+                listener.onItemClick(position)
             }
 
             CategoryButton.setBackground(ContextCompat.getDrawable(context, R.drawable.button_border_filled))
@@ -60,11 +60,21 @@ class CategoryAdapter (
         val TextViewName: TextView = holder.TextViewName
         val CategoryButton: LinearLayout = holder.CategoryButton
 
-       var ClickedPosition = context.getSharedPreferences("PreferencesForTable",Context.MODE_PRIVATE).getInt("positionClicked", -1)
-        if (ClickedPosition != position){
-            CategoryButton.setBackground(ContextCompat.getDrawable(context, R.drawable.button_border))
-            TextViewName.setTextColor(Color.BLACK)
-        }
+            var ClickedPosition =
+                context.getSharedPreferences("PreferencesForTable", Context.MODE_PRIVATE)
+                    .getInt("positionClicked", 0)
+            if (ClickedPosition != position) {
+                CategoryButton.setBackground(
+                    ContextCompat.getDrawable(
+                        context,
+                        R.drawable.button_border
+                    )
+                )
+                TextViewName.setTextColor(Color.BLACK)
+            } else {
+                CategoryButton.setBackground(ContextCompat.getDrawable(context, R.drawable.button_border_filled))
+                TextViewName.setTextColor(Color.WHITE)
+            }
         holder.TextViewName.text = categoryList.get(position).name
     }
 
@@ -74,7 +84,7 @@ class CategoryAdapter (
     }
 
     interface OnItemClickListener {
-        fun OnItemClick(position: Int)
+        fun onItemClick(position: Int)
     }
 }
 
