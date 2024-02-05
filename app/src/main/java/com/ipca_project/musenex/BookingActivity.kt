@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.braintreepayments.cardform.view.CardForm
+import viewModels.AnalyticsViewModel
 
 
 class BookingActivity : AppCompatActivity() {
@@ -19,8 +20,13 @@ class BookingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_booking_page)
 
+        val analyticsViewModel = AnalyticsViewModel()
+        analyticsViewModel.sendEvent("ScreenBooking", "")
+
         //AppBar
         setSupportActionBar(findViewById(R.id.my_toolbar))
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
         getSupportActionBar()?.setTitle("Reservar")
 
@@ -52,6 +58,12 @@ class BookingActivity : AppCompatActivity() {
         }
 
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
+    }
+
     fun hideKeyboard() {
         hideKeyboard(currentFocus ?: View(this))
     }

@@ -14,11 +14,10 @@ import com.google.android.exoplayer2.ui.StyledPlayerView
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
-import androidx.navigation.findNavController
-import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import model.Museum
+import viewModels.AnalyticsViewModel
 
 class PiecePageActivity : AppCompatActivity() {
     private lateinit var imageView: ImageView
@@ -36,8 +35,7 @@ class PiecePageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_piece_page)
 
-        //val navController = findNavController(R.id.piecePageActivity)
- //       setupActionBarWithNavController(navController)
+
 
         val data: Uri? = intent.data
         if (data != null && "musenex" == data.scheme) {
@@ -49,15 +47,20 @@ class PiecePageActivity : AppCompatActivity() {
             piece = intent.getSerializableExtra("piece") as Piece
             initialSetup()
         }
-
-            // Exemplo de código para abrir a atividade usando um deep link
-        //val deepLinkIntent = Intent(Intent.ACTION_VIEW, Uri.parse("musenex://piecepage"))
-        //startActivity(deepLinkIntent)
+    }
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 
     fun initialSetup() {
+
+        val analyticsViewModel = AnalyticsViewModel()
+        analyticsViewModel.sendEvent("ScreenPiece", piece.name)
         //appBar
         setSupportActionBar(findViewById(R.id.my_toolbar))
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
         getSupportActionBar()?.setTitle(piece.name)
 

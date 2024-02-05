@@ -20,6 +20,7 @@ import com.gtappdevelopers.kotlingfgproject.EventsAdapter
 import model.Category
 import model.Event
 import model.Museum
+import viewModels.AnalyticsViewModel
 import viewModels.DiscoveryViewModel
 
 open class Discovery : AppCompatActivity(), CategoryAdapter.OnItemClickListener {
@@ -45,6 +46,9 @@ open class Discovery : AppCompatActivity(), CategoryAdapter.OnItemClickListener 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.discovery_page)
+
+        val analyticsViewModel = AnalyticsViewModel()
+        analyticsViewModel.sendEvent("ScreenDiscovery", "")
 
         // start data base
         viewModel.fetchDiscovery()
