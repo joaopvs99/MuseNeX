@@ -1,11 +1,13 @@
 package com.ipca_project.musenex
 
 import adapters.AdapterDiscovery
+import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -17,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
+import com.google.android.material.internal.ViewUtils.hideKeyboard
 import com.gtappdevelopers.kotlingfgproject.CategoryAdapter
 import com.gtappdevelopers.kotlingfgproject.EventsAdapter
 import model.Category
@@ -72,9 +75,12 @@ open class Discovery : AppCompatActivity(),
 
 
         searchViewButton.setOnClickListener() {
+            hideKeyboard(currentFocus ?: View(this))
             var search = searchText.text
 
+            var eventsAux = ArrayList<Event>()
             viewModel.events.observe(this, Observer { events ->
+                eventsAux = events
                 EventList = ArrayList()
                 for (searchEvent in events) {
                     if (searchEvent.name.lowercase().contains(search.toString().lowercase())) {
@@ -91,7 +97,6 @@ open class Discovery : AppCompatActivity(),
                             )
                         )
                     }
-
                 }
             })
 
@@ -128,7 +133,7 @@ open class Discovery : AppCompatActivity(),
             MuseumCard.layoutManager = layoutManager
 
             // start adapter
-            museumAdapter = AdapterDiscovery(MuseumList, EventList, this, this)
+            museumAdapter = AdapterDiscovery(MuseumList, eventsAux, this, this)
 
             // turn adapter to recycleView
             MuseumCard.adapter = museumAdapter
@@ -200,7 +205,15 @@ open class Discovery : AppCompatActivity(),
             }
             // start adapter
             eventsAdapter = EventsAdapter(EventList, MuseumList, this, this, 1)
+            if(MuseumList.isNotEmpty()) {
+                // start adapter
+                museumAdapter = AdapterDiscovery(MuseumList, EventList, this, this)
 
+                // turn adapter to recycleView
+                MuseumCard.adapter = museumAdapter
+
+                museumAdapter.notifyDataSetChanged()
+            }
             // turn adapter to recycleView
             EventsCard.adapter = eventsAdapter
 
@@ -229,14 +242,15 @@ open class Discovery : AppCompatActivity(),
             val layoutManager = GridLayoutManager(this, 2)
             MuseumCard.layoutManager = layoutManager
 
-            // start adapter
-            museumAdapter = AdapterDiscovery(MuseumList, EventList, this, this)
+            if(EventList.isNotEmpty()) {
+                // start adapter
+                museumAdapter = AdapterDiscovery(MuseumList, EventList, this, this)
 
-            // turn adapter to recycleView
-            MuseumCard.adapter = museumAdapter
+                // turn adapter to recycleView
+                MuseumCard.adapter = museumAdapter
 
-            // notify adapter about data changes
-            museumAdapter.notifyDataSetChanged()
+                museumAdapter.notifyDataSetChanged()
+            }
         })
     }
 
@@ -267,13 +281,15 @@ open class Discovery : AppCompatActivity(),
                     }
                 }
 
-                // start adapter
-                museumAdapter = AdapterDiscovery(MuseumList, EventList, this, this)
+                if(EventList.isNotEmpty()) {
+                    // start adapter
+                    museumAdapter = AdapterDiscovery(MuseumList, EventList, this, this)
 
-                // turn adapter to recycleView
-                MuseumCard.adapter = museumAdapter
+                    // turn adapter to recycleView
+                    MuseumCard.adapter = museumAdapter
 
-                museumAdapter.notifyDataSetChanged()
+                    museumAdapter.notifyDataSetChanged()
+                }
             })
 
             viewModel.events.observe(this, Observer { events ->
@@ -302,6 +318,16 @@ open class Discovery : AppCompatActivity(),
                 EventsCard.adapter = eventsAdapter
                 // notify adapter about data changes
                 eventsAdapter.notifyDataSetChanged()
+
+                if(MuseumList.isNotEmpty()) {
+                        // start adapter
+                        museumAdapter = AdapterDiscovery(MuseumList, EventList, this, this)
+
+                        // turn adapter to recycleView
+                        MuseumCard.adapter = museumAdapter
+
+                        museumAdapter.notifyDataSetChanged()
+                    }
             })
         } else {
             fetchAll()
@@ -331,5 +357,10 @@ open class Discovery : AppCompatActivity(),
     }
 
     override fun onItemClickEvents(position: Int) {
+    }
+
+    fun Context.hideKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }

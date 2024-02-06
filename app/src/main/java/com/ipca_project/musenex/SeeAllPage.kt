@@ -49,6 +49,10 @@ class SeeAllPage : AppCompatActivity(),
         //toolbar settings
         setSupportActionBar(findViewById(R.id.seeAllToolbar))
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
+        getSupportActionBar()?.setTitle("Ver Todos")
+
 
         //call variables
         EventsSeeAllCard = findViewById(R.id.seeAllEvents)
@@ -72,13 +76,13 @@ class SeeAllPage : AppCompatActivity(),
                 Intent1 = getIntent()
 
                 var receivedEvent =
-                    Intent1.getSerializableExtra("receivedEvents") as ArrayList<Piece>
+                    Intent1.getSerializableExtra("receivedEvents") as ArrayList<Event>
 
                 val layoutManager = GridLayoutManager(this, 2)
                 EventsSeeAllCard.layoutManager = layoutManager
 
                 // start adapter
-                adapterSeeAll = AdapterSeeAll(receivedEvent)
+                adapterSeeAll = AdapterSeeAll(this, ArrayList(), receivedEvent)
 
                 // turn adapter to recycleView
                 EventsSeeAllCard.adapter = adapterSeeAll
@@ -100,7 +104,7 @@ class SeeAllPage : AppCompatActivity(),
                 EventsSeeAllCard.layoutManager = layoutManager
 
                 // start adapter
-                adapterSeeAll = AdapterSeeAll(receivedPieces)
+                adapterSeeAll = AdapterSeeAll(this, receivedPieces, ArrayList())
 
                 // turn adapter to recycleView
                 EventsSeeAllCard.adapter = adapterSeeAll
@@ -111,6 +115,10 @@ class SeeAllPage : AppCompatActivity(),
             }
 
         }
+    }
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 
     override fun onItemClick(position: Int) {
