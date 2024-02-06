@@ -2,16 +2,19 @@ package Fragments
 
 import adapters.EventAdapter
 import adapters.PieceAdapter
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 import com.ipca_project.musenex.R
+import com.ipca_project.musenex.SeeAllPage
 import model.Event
 import model.Piece
 
@@ -43,6 +46,31 @@ class FragmentCollections: Fragment() {
         artworksRecyclerView.adapter = artworksAdapter
         snapHelper.attachToRecyclerView(artworksRecyclerView)
 
+
+        val seeAllPieces: Button = view.findViewById(R.id.buttonPieces)
+
+        seeAllPieces.setOnClickListener {
+
+
+            var intent = Intent(context, SeeAllPage::class.java)
+            intent.putExtra("receivedPieces", receivedPieces)
+            intent.putExtra("tipo", 1)
+            startActivity(intent)
+
+        }
+
+
+        val seeAllEvents: Button = view.findViewById(R.id.buttonEvent)
+
+        seeAllEvents.setOnClickListener {
+
+
+            var intent = Intent(context, SeeAllPage::class.java)
+            intent.putExtra("receivedEvents", receivedData)
+            intent.putExtra("tipo", 0)
+            startActivity(intent)
+
+        }
 
 
 

@@ -58,10 +58,9 @@ class SeeAllPage : AppCompatActivity(),
         MuseumList = ArrayList()
         EventList = ArrayList()
 
-        var Intent1: Intent
-        Intent1= getIntent()
+        var Intent1: Intent = getIntent()
 
-        tipo  =  Intent1.getIntExtra("type", -1)
+        tipo  =  Intent1.getIntExtra("tipo", -1)
 
 
         when (tipo) {
@@ -69,6 +68,21 @@ class SeeAllPage : AppCompatActivity(),
             0 -> {
                 getSupportActionBar()?.setTitle("Todos os Eventos")
 
+                var Intent1: Intent
+                Intent1= getIntent()
+
+                var receivedEvent  =  Intent1.getSerializableExtra("receivedEvents") as ArrayList<Piece>
+
+                val layoutManager = GridLayoutManager(this, 2)
+                EventsSeeAllCard.layoutManager = layoutManager
+
+                // start adapter
+                adapterSeeAll = AdapterSeeAll(receivedEvent)
+
+                // turn adapter to recycleView
+                EventsSeeAllCard.adapter = adapterSeeAll
+
+                adapterSeeAll.notifyDataSetChanged()
 
             }
 
