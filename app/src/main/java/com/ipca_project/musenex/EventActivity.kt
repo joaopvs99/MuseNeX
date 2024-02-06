@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 import io.github.glailton.expandabletextview.ExpandableTextView
 import model.Event
-import model.Museum
 import viewModels.AnalyticsViewModel
 
 class EventActivity : AppCompatActivity() {
