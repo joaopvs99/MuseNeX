@@ -178,6 +178,7 @@ open class Discovery : AppCompatActivity(),
 
         fetchAll()
     }
+
     fun fetchAll() {
         // Horizontal Cards building (Events)
         viewModel.events.observe(this, Observer { events ->
@@ -197,6 +198,14 @@ open class Discovery : AppCompatActivity(),
                 )
 
             }
+            // start adapter
+            eventsAdapter = EventsAdapter(EventList, MuseumList, this, this, 1)
+
+            // turn adapter to recycleView
+            EventsCard.adapter = eventsAdapter
+
+            // notify adapter about data changes
+            eventsAdapter.notifyDataSetChanged()
         })
 
         // Vertical Cards Building (Museums)
@@ -215,32 +224,22 @@ open class Discovery : AppCompatActivity(),
                     )
                 )
             }
+
+            // Define gridLayout
+            val layoutManager = GridLayoutManager(this, 2)
+            MuseumCard.layoutManager = layoutManager
+
+            // start adapter
+            museumAdapter = AdapterDiscovery(MuseumList, EventList, this, this)
+
+            // turn adapter to recycleView
+            MuseumCard.adapter = museumAdapter
+
+            // notify adapter about data changes
+            museumAdapter.notifyDataSetChanged()
         })
-
-
-        // start adapter
-        eventsAdapter = EventsAdapter(EventList, MuseumList, this, this, 1)
-
-        // turn adapter to recycleView
-        EventsCard.adapter = eventsAdapter
-
-        // notify adapter about data changes
-        eventsAdapter.notifyDataSetChanged()
-
-        // Define gridLayout
-        val layoutManager = GridLayoutManager(this, 2)
-        MuseumCard.layoutManager = layoutManager
-
-        // start adapter
-        museumAdapter = AdapterDiscovery(MuseumList, EventList, this, this)
-
-        // turn adapter to recycleView
-        MuseumCard.adapter = museumAdapter
-
-        // notify adapter about data changes
-        museumAdapter.notifyDataSetChanged()
-
     }
+
     // button function
     override fun onItemClick(position: Int) {
         clickedPosition = position
@@ -309,11 +308,13 @@ open class Discovery : AppCompatActivity(),
         }
         categoryAdapter.notifyDataSetChanged()
     }
+
     // menu inflate
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         return true
     }
+
     // Show search zone
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -324,9 +325,11 @@ open class Discovery : AppCompatActivity(),
         }
         return super.onOptionsItemSelected(item)
     }
+
     override fun onItemClickMuseum(position: Int) {
 
     }
+
     override fun onItemClickEvents(position: Int) {
     }
 }

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.ipca_project.musenex.MuseumPageActivity
+import com.ipca_project.musenex.EventActivity
 import com.ipca_project.musenex.R
 import com.squareup.picasso.Picasso
 import model.Event
@@ -55,20 +55,18 @@ class EventsAdapter(
         init {
             itemView.setOnClickListener(this)
         }
-
         override fun onClick(p0: View?) {
             val position = adapterPosition
 
             if (position != RecyclerView.NO_POSITION) {
                 listener.onItemClickEvents(position)
-                val intent = Intent(context, MuseumPageActivity::class.java)
-                intent.putExtra("Museu", museumList[position])
-                val filteredEvents: List<Event> =
-                    eventList.filter { it.museumId == museumList[position].museumId }
-                intent.putExtra("Events", ArrayList(filteredEvents))
+                val intent = Intent(context, EventActivity::class.java)
+                intent.putExtra("Events", eventList[position])
                 context.startActivity(intent)
+
             }
         }
+
     }
 
     override fun onBindViewHolder(holder: EventsAdapter.EventsViewHolder, position: Int) {

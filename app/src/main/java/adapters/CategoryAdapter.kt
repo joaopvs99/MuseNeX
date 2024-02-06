@@ -14,7 +14,7 @@ import com.ipca_project.musenex.R
 import model.Category
 
 
-class CategoryAdapter (
+class CategoryAdapter(
 
     private val categoryList: ArrayList<Category>,
     private val context: Context,
@@ -50,7 +50,12 @@ class CategoryAdapter (
                 listener.onItemClick(position)
             }
 
-            CategoryButton.setBackground(ContextCompat.getDrawable(context, R.drawable.button_border_filled))
+            CategoryButton.setBackground(
+                ContextCompat.getDrawable(
+                    context,
+                    R.drawable.button_border_filled
+                )
+            )
             TextViewName.setTextColor(Color.WHITE)
         }
     }
@@ -60,21 +65,26 @@ class CategoryAdapter (
         val TextViewName: TextView = holder.TextViewName
         val CategoryButton: LinearLayout = holder.CategoryButton
 
-            var ClickedPosition =
-                context.getSharedPreferences("PreferencesForTable", Context.MODE_PRIVATE)
-                    .getInt("positionClicked", 0)
-            if (ClickedPosition != position) {
-                CategoryButton.setBackground(
-                    ContextCompat.getDrawable(
-                        context,
-                        R.drawable.button_border
-                    )
+        var ClickedPosition =
+            context.getSharedPreferences("PreferencesForTable", Context.MODE_PRIVATE)
+                .getInt("positionClicked", 0)
+        if (ClickedPosition != position) {
+            CategoryButton.setBackground(
+                ContextCompat.getDrawable(
+                    context,
+                    R.drawable.button_border
                 )
-                TextViewName.setTextColor(Color.BLACK)
-            } else {
-                CategoryButton.setBackground(ContextCompat.getDrawable(context, R.drawable.button_border_filled))
-                TextViewName.setTextColor(Color.WHITE)
-            }
+            )
+            TextViewName.setTextColor(Color.BLACK)
+        } else {
+            CategoryButton.setBackground(
+                ContextCompat.getDrawable(
+                    context,
+                    R.drawable.button_border_filled
+                )
+            )
+            TextViewName.setTextColor(Color.WHITE)
+        }
         holder.TextViewName.text = categoryList.get(position).name
     }
 

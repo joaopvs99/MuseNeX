@@ -2,9 +2,9 @@ package com.ipca_project.musenex
 
 import adapters.AdapterDiscovery
 import adapters.AdapterSeeAll
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gtappdevelopers.kotlingfgproject.CategoryAdapter
@@ -20,7 +20,7 @@ class SeeAllPage : AppCompatActivity(),
     EventsAdapter.OnItemClickListener,
     AdapterDiscovery.OnItemClickListener {
 
-    var tipo: Int = 1
+    var tipo: Int = -1
 
     private lateinit var EventsSeeAllCard: RecyclerView
 
@@ -58,107 +58,58 @@ class SeeAllPage : AppCompatActivity(),
         MuseumList = ArrayList()
         EventList = ArrayList()
 
+        var Intent1: Intent = getIntent()
+
+        tipo = Intent1.getIntExtra("tipo", -1)
+
+
         when (tipo) {
 
             0 -> {
                 getSupportActionBar()?.setTitle("Todos os Eventos")
 
-                viewModel.museums.observe(this, Observer { museums ->
-                    MuseumList = ArrayList()
-                    for (searchMuseum in museums) {
-                        MuseumList.add(
-                            Museum(
-                                museumId = searchMuseum.museumId,
-                                name = searchMuseum.name,
-                                location = searchMuseum.location,
-                                description = searchMuseum.description,
-                                contact = searchMuseum.contact,
-                                categoryId = searchMuseum.categoryId,
-                                galery = searchMuseum.galery
-                            )
-                        )
-                    }
-                })
+                var Intent1: Intent
+                Intent1 = getIntent()
 
-                viewModel.events.observe(this, Observer { events ->
-                    EventList = ArrayList()
-                    for (searchEvent in events) {
-                        EventList.add(
-                            Event(
-                                eventId = searchEvent.eventId,
-                                name = searchEvent.name,
-                                date_event_beg = searchEvent.date_event_beg,
-                                date_event_end = searchEvent.date_event_end,
-                                description = searchEvent.description,
-                                museumId = searchEvent.museumId,
-                                galeryEvent = searchEvent.galeryEvent,
-                                categoryId = searchEvent.categoryId
-                            )
-                        )
+                var receivedEvent =
+                    Intent1.getSerializableExtra("receivedEvents") as ArrayList<Piece>
 
-                    }
+                val layoutManager = GridLayoutManager(this, 2)
+                EventsSeeAllCard.layoutManager = layoutManager
 
-                    val layoutManager = GridLayoutManager(this, 1)
-                    EventsSeeAllCard.layoutManager = layoutManager
+                // start adapter
+                adapterSeeAll = AdapterSeeAll(receivedEvent)
 
-                    // start adapter
-                    eventsAdapter = EventsAdapter(EventList, MuseumList, this, this, 0)
+                // turn adapter to recycleView
+                EventsSeeAllCard.adapter = adapterSeeAll
 
-                    // turn adapter to recycleView
-                    EventsSeeAllCard.adapter = eventsAdapter
-
-                    eventsAdapter.notifyDataSetChanged()
-                }
-                )
+                adapterSeeAll.notifyDataSetChanged()
 
             }
 
             1 -> {
                 getSupportActionBar()?.setTitle("Todas as Obras")
 
-                PieceList.add(
-                    Piece(
-                        "ola",
-                        "aefd",
-                        "ef",
-                        "dgfse",
-                        "eiusfg",
-                        "iuygef",
-                        "ewgf",
-                        "kjhgf",
-                        "igefy"
-                    )
-                )
-                pieceModel.pieces.observe(this, Observer { pieces ->
-                    PieceList = ArrayList()
-                    for (searchPieces in pieces) {
-                        PieceList.add(
-                            Piece(
-                                pieceId = searchPieces.pieceId,
-                                name = searchPieces.name,
-                                description = searchPieces.description,
-                                authorId = searchPieces.authorId,
-                                museumId = searchPieces.museumId,
-                                categoryId = searchPieces.categoryId,
-                                audio_url = searchPieces.audio_url,
-                                foto_url = searchPieces.foto_url,
-                                engDescription = searchPieces.engDescription
-                            )
-                        )
-                    }
-                    val layoutManager = GridLayoutManager(this, 2)
-                    EventsSeeAllCard.layoutManager = layoutManager
+                var Intent1: Intent
+                Intent1 = getIntent()
 
-                    // start adapter
-                    adapterSeeAll = AdapterSeeAll(PieceList)
+                var receivedPieces =
+                    Intent1.getSerializableExtra("receivedPieces") as ArrayList<Piece>
 
-                    // turn adapter to recycleView
-                    EventsSeeAllCard.adapter = adapterSeeAll
+                val layoutManager = GridLayoutManager(this, 2)
+                EventsSeeAllCard.layoutManager = layoutManager
 
-                    adapterSeeAll.notifyDataSetChanged()
+                // start adapter
+                adapterSeeAll = AdapterSeeAll(receivedPieces)
 
-                })
+                // turn adapter to recycleView
+                EventsSeeAllCard.adapter = adapterSeeAll
+
+                adapterSeeAll.notifyDataSetChanged()
+
+
             }
+
         }
     }
 

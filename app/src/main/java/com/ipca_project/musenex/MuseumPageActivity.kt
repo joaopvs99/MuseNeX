@@ -2,22 +2,22 @@ package com.ipca_project.musenex
 
 
 import FragmentVisit
+import Fragments.FragmentCollections
+import adapters.DotsIndicatorDecoration
 import adapters.GalleryAdapter
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
-import Fragments.FragmentCollections
-import adapters.DotsIndicatorDecoration
-import android.view.View
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import model.Event
 import model.Museum
 import model.Piece
@@ -26,10 +26,15 @@ import viewModels.MuseumViewModel
 
 class MuseumPageActivity : AppCompatActivity() {
 
+    //tiaguinho changes
+    private lateinit var button3D: TextView
+
+
+    //rui
     private lateinit var recyclerView: RecyclerView
-    private lateinit var expandedTextView : TextView
-    private lateinit var collectionButton : Button
-    private lateinit var visitButton : Button
+    private lateinit var expandedTextView: TextView
+    private lateinit var collectionButton: Button
+    private lateinit var visitButton: Button
     private lateinit var viewModel: MuseumViewModel
     private lateinit var pieces: ArrayList<Piece>
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +57,7 @@ class MuseumPageActivity : AppCompatActivity() {
         //ViewPieces
         viewModel = MuseumViewModel()
         viewModel.pieces.observe(this, Observer { pieces ->
-            this.pieces= ArrayList(pieces.filter { it.museumId == museum.museumId })
+            this.pieces = ArrayList(pieces.filter { it.museumId == museum.museumId })
 
             val fragment = FragmentCollections()
             val bundle = Bundle()
@@ -123,7 +128,15 @@ class MuseumPageActivity : AppCompatActivity() {
                 .addToBackStack(null)
                 .commit()
         }
+
+        button3D = findViewById(R.id.button_3d)
+
+        button3D.setOnClickListener{
+            Toast.makeText(this, "ola", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, Page3D::class.java))
+        }
     }
+
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return true
