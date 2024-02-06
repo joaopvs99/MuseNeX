@@ -43,6 +43,9 @@ class FragmentCollections: Fragment() {
         artworksRecyclerView.adapter = artworksAdapter
         snapHelper.attachToRecyclerView(artworksRecyclerView)
 
+
+
+
         return view
     }
 }

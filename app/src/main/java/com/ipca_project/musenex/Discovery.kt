@@ -197,6 +197,14 @@ open class Discovery : AppCompatActivity(),
                 )
 
             }
+            // start adapter
+            eventsAdapter = EventsAdapter(EventList, MuseumList, this, this, 1)
+
+            // turn adapter to recycleView
+            EventsCard.adapter = eventsAdapter
+
+            // notify adapter about data changes
+            eventsAdapter.notifyDataSetChanged()
         })
 
         // Vertical Cards Building (Museums)
@@ -215,32 +223,22 @@ open class Discovery : AppCompatActivity(),
                     )
                 )
             }
+
+            // Define gridLayout
+            val layoutManager = GridLayoutManager(this, 2)
+            MuseumCard.layoutManager = layoutManager
+
+            // start adapter
+            museumAdapter = AdapterDiscovery(MuseumList, EventList, this, this)
+
+            // turn adapter to recycleView
+            MuseumCard.adapter = museumAdapter
+
+            // notify adapter about data changes
+            museumAdapter.notifyDataSetChanged()
         })
-
-
-        // start adapter
-        eventsAdapter = EventsAdapter(EventList, MuseumList, this, this, 1)
-
-        // turn adapter to recycleView
-        EventsCard.adapter = eventsAdapter
-
-        // notify adapter about data changes
-        eventsAdapter.notifyDataSetChanged()
-
-        // Define gridLayout
-        val layoutManager = GridLayoutManager(this, 2)
-        MuseumCard.layoutManager = layoutManager
-
-        // start adapter
-        museumAdapter = AdapterDiscovery(MuseumList, EventList, this, this)
-
-        // turn adapter to recycleView
-        MuseumCard.adapter = museumAdapter
-
-        // notify adapter about data changes
-        museumAdapter.notifyDataSetChanged()
-
     }
+
     // button function
     override fun onItemClick(position: Int) {
         clickedPosition = position
