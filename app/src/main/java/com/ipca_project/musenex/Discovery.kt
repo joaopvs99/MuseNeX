@@ -178,6 +178,7 @@ open class Discovery : AppCompatActivity(),
 
         fetchAll()
     }
+
     fun fetchAll() {
         // Horizontal Cards building (Events)
         viewModel.events.observe(this, Observer { events ->
@@ -307,11 +308,13 @@ open class Discovery : AppCompatActivity(),
         }
         categoryAdapter.notifyDataSetChanged()
     }
+
     // menu inflate
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         return true
     }
+
     // Show search zone
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -322,9 +325,11 @@ open class Discovery : AppCompatActivity(),
         }
         return super.onOptionsItemSelected(item)
     }
+
     override fun onItemClickMuseum(position: Int) {
 
     }
+
     override fun onItemClickEvents(position: Int) {
     }
 }

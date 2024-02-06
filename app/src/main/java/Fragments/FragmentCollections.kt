@@ -18,7 +18,7 @@ import com.ipca_project.musenex.SeeAllPage
 import model.Event
 import model.Piece
 
-class FragmentCollections: Fragment() {
+class FragmentCollections : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,7 +31,8 @@ class FragmentCollections: Fragment() {
 
         // Configure RecyclerView for events
         val eventsRecyclerView: RecyclerView = view.findViewById(R.id.eventsList)
-        val eventsLayoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        val eventsLayoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         eventsRecyclerView.layoutManager = eventsLayoutManager
         val eventsAdapter = EventAdapter(requireContext(), receivedData)
         eventsRecyclerView.adapter = eventsAdapter
@@ -40,7 +41,8 @@ class FragmentCollections: Fragment() {
 
         // Configure RecyclerView for the pieces of art
         val artworksRecyclerView: RecyclerView = view.findViewById(R.id.piecesView)
-        val artworksLayoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        val artworksLayoutManager =
+            LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         artworksRecyclerView.layoutManager = artworksLayoutManager
         val artworksAdapter = PieceAdapter(requireContext(), receivedPieces)
         artworksRecyclerView.adapter = artworksAdapter
@@ -63,17 +65,11 @@ class FragmentCollections: Fragment() {
         val seeAllEvents: Button = view.findViewById(R.id.buttonEvent)
 
         seeAllEvents.setOnClickListener {
-
-
             var intent = Intent(context, SeeAllPage::class.java)
             intent.putExtra("receivedEvents", receivedData)
             intent.putExtra("tipo", 0)
             startActivity(intent)
-
         }
-
-
-
         return view
     }
 }

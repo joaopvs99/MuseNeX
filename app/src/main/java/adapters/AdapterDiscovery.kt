@@ -46,14 +46,16 @@ class AdapterDiscovery(
         init {
             itemView.setOnClickListener(this)
         }
+
         override fun onClick(p0: View?) {
             val position = adapterPosition
 
             if (position != RecyclerView.NO_POSITION) {
                 listener.onItemClickMuseum(position)
                 val intent = Intent(context, MuseumPageActivity::class.java)
-                intent.putExtra("Museu",museumList[position])
-                val filteredEvents: List<Event> = eventList.filter { it.museumId == museumList[position].museumId }
+                intent.putExtra("Museu", museumList[position])
+                val filteredEvents: List<Event> =
+                    eventList.filter { it.museumId == museumList[position].museumId }
                 intent.putExtra("Events", ArrayList(filteredEvents))
                 context.startActivity(intent)
             }
@@ -64,7 +66,8 @@ class AdapterDiscovery(
     override fun onBindViewHolder(holder: MuseumViewHolder, position: Int) {
         holder.cardTextView.text = museumList.get(position).name
         val galleryItem = museumList.get(position).galery
-        Picasso.get().load(galleryItem[0]).resize(1920, 1080).centerInside().into(holder.cardImageView)
+        Picasso.get().load(galleryItem[0]).resize(1920, 1080).centerInside()
+            .into(holder.cardImageView)
     }
 
     // return list size

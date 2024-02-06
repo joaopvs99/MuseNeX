@@ -60,7 +60,7 @@ class SeeAllPage : AppCompatActivity(),
 
         var Intent1: Intent = getIntent()
 
-        tipo  =  Intent1.getIntExtra("tipo", -1)
+        tipo = Intent1.getIntExtra("tipo", -1)
 
 
         when (tipo) {
@@ -69,9 +69,10 @@ class SeeAllPage : AppCompatActivity(),
                 getSupportActionBar()?.setTitle("Todos os Eventos")
 
                 var Intent1: Intent
-                Intent1= getIntent()
+                Intent1 = getIntent()
 
-                var receivedEvent  =  Intent1.getSerializableExtra("receivedEvents") as ArrayList<Piece>
+                var receivedEvent =
+                    Intent1.getSerializableExtra("receivedEvents") as ArrayList<Piece>
 
                 val layoutManager = GridLayoutManager(this, 2)
                 EventsSeeAllCard.layoutManager = layoutManager
@@ -90,9 +91,10 @@ class SeeAllPage : AppCompatActivity(),
                 getSupportActionBar()?.setTitle("Todas as Obras")
 
                 var Intent1: Intent
-                Intent1= getIntent()
+                Intent1 = getIntent()
 
-                var receivedPieces  =  Intent1.getSerializableExtra("receivedPieces") as ArrayList<Piece>
+                var receivedPieces =
+                    Intent1.getSerializableExtra("receivedPieces") as ArrayList<Piece>
 
                 val layoutManager = GridLayoutManager(this, 2)
                 EventsSeeAllCard.layoutManager = layoutManager
@@ -104,7 +106,6 @@ class SeeAllPage : AppCompatActivity(),
                 EventsSeeAllCard.adapter = adapterSeeAll
 
                 adapterSeeAll.notifyDataSetChanged()
-
 
 
             }
